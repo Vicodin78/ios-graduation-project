@@ -1,13 +1,13 @@
 //
-//  ProfileViewController.swift
+//  InfoViewController.swift
 //  Netology_IB_Instruments'
 //
-//  Created by Vicodin on 24.04.2022.
+//  Created by Vicodin on 25.04.2022.
 //
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class InfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

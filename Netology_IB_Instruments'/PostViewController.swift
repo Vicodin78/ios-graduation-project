@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  PostViewController.swift
 //  Netology_IB_Instruments'
 //
 //  Created by Vicodin on 24.04.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class PostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
