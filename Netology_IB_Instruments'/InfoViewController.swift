@@ -11,19 +11,31 @@ class InfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        title = "InfoViewController"
+        view.backgroundColor = .systemBlue
+        makeAlertButton()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func makeAlertButton() {
+        let alertButton = UIButton(frame: CGRect(x: 0, y: 0, width: 250, height: 50))
+        alertButton.center = view.center
+        alertButton.setTitle("Сжечь телефон", for: .normal)
+        alertButton.backgroundColor = .systemRed
+        alertButton.addTarget(self, action: #selector(alertAction), for: .touchUpInside)
+        view.addSubview(alertButton)
     }
-    */
-
+    
+    @objc private func alertAction() {
+        let alertWin = UIAlertController(title: "Внимание!", message: "Возжожны ожоги на руках. Вы уверены что хотите сжечь телефон?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Сжечь его!", style: .default) { _ in
+            self.dismiss(animated: true)
+            print("Телефон уничтожен!")
+        }
+        let nonAction = UIAlertAction(title: "Погодите", style: .destructive) { _ in
+            print("Этот слабак передумал")
+        }
+        alertWin.addAction(nonAction)
+        alertWin.addAction(okAction)
+        present(alertWin, animated: true)
+    }
 }

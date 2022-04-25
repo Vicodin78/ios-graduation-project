@@ -7,23 +7,31 @@
 
 import UIKit
 
+struct Post {
+    var title: String
+}
+
 class PostViewController: UIViewController {
-
-    override func viewDidLoad() {
+    
+    var post: Post?
+    
+    override func  viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        if let post = post {
+            title = post.title
+        }
+        view.backgroundColor = .brown
+        makeBarButton()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func makeBarButton() {
+        let buttonBar = UIBarButtonItem(title: "InfoView", style: .plain, target: self, action: #selector(tapButtonBar))
+        navigationItem.rightBarButtonItem = buttonBar
     }
-    */
-
+    
+    @objc private func tapButtonBar() {
+        let vc = InfoViewController()
+        let vcNav = UINavigationController(rootViewController: vc)//для отображения title
+        present(vcNav, animated: true)
+    }
 }
