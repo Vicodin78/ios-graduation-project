@@ -15,6 +15,9 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewController()
+        self.tabBar.backgroundColor = UIColor.systemGray5
+        self.navigationController?.isNavigationBarHidden = true
+        UITabBar.appearance().tintColor = UIColor.magenta
     }
     
     private func setupViewController() {
@@ -27,6 +30,7 @@ class TabBarViewController: UITabBarController {
         
         profileViewController.tabBarItem.title = "Профиль"
         profileViewController.navigationItem.title = "ProfileView"
+        
         profileViewController.tabBarItem.image = UIImage(systemName: "person.fill")
         
         viewControllers = [firstVC, secondVC]
