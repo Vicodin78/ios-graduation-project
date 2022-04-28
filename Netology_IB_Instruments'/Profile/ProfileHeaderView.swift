@@ -9,11 +9,19 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    let indent = UIScreen.main.bounds.height * 0.1
-    let width = UIScreen.main.bounds.width
-    let heigth = UIScreen.main.bounds.height
+    private let indent = UIScreen.main.bounds.height * 0.1
+    private let width = UIScreen.main.bounds.width
+    private let heigth = UIScreen.main.bounds.height
     
-    var statusPrint: String?
+    private var statusText: String?
+    
+    let secondTitle: UILabel = {
+        let secondTitle = UILabel(frame: CGRect(x: 135, y: (UIScreen.main.bounds.height * 0.1) + 82, width: 200, height: 16))
+        secondTitle.text = "Waiting for something..."
+        secondTitle.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
+        secondTitle.textColor = .gray
+        return secondTitle
+    }()
     
     func custom() {
         let myView: UIView = {
@@ -37,16 +45,16 @@ class ProfileHeaderView: UIView {
         
         let titleLabel: UILabel = {
             let titleLabel = UILabel(frame: CGRect(x: 0, y: 27, width: width, height: 40))
-            titleLabel.text = "Hipster panda"
+            titleLabel.text = "Hipster Panda"
             titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
             titleLabel.textAlignment = .center
             return titleLabel
         }()
         myView.addSubview(titleLabel)
-        statusPrint = titleLabel.text
+//        statusPrint = titleLabel.text
         
         let buttonAct: UIButton = {
-            let buttonAct = UIButton(frame: CGRect(x: 16, y: 132, width: width - 32, height: 50))
+            let buttonAct = UIButton(frame: CGRect(x: 16, y: 162, width: width - 32, height: 50))
             buttonAct.backgroundColor = .systemBlue
             buttonAct.layer.cornerRadius = 14//В задании стоит 4, но тогда не выглядит как на макете
             buttonAct.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -59,22 +67,13 @@ class ProfileHeaderView: UIView {
         }()
         myView.addSubview(buttonAct)
         
-        let secondTitle: UILabel = {
-            let secondTitle = UILabel(frame: CGRect(x: 135, y: 82, width: 200, height: 16))
-            secondTitle.text = "Waiting for something..."
-            secondTitle.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
-            secondTitle.textColor = .gray
-            return secondTitle
-        }()
-        myView.addSubview(secondTitle)
-        
         let textField: UITextField = {
-            let textField = UITextField(frame: CGRect(x: 135, y: 82, width: 200, height: 40))
+            let textField = UITextField(frame: CGRect(x: 133, y: 112, width: 200, height: 40))
             textField.backgroundColor = .white
             textField.layer.cornerRadius = 12
             textField.layer.borderWidth = 1
             textField.layer.borderColor = UIColor.black.cgColor
-            textField.text = "Listening to music"
+            textField.text = ""
             textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
             textField.textColor = .black
             textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -86,12 +85,13 @@ class ProfileHeaderView: UIView {
     }
     
     @objc func buttonPressed() {
-        if let statusPrint = statusPrint {
-            print(statusPrint)
-        }
+        secondTitle.text = statusText
+//        if let statusPrint = statusPrint {
+//            print(statusPrint)
+//        }
     }
     
     @objc func statusTextChanged(_ textField: UITextField) {
-        
+        statusText = textField.text
     }
 }
