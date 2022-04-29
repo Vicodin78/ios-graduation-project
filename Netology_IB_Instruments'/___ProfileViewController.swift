@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class RFrefeProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

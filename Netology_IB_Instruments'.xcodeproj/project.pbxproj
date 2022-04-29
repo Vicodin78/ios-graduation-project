@@ -9,18 +9,19 @@
 /* Begin PBXBuildFile section */
 		781EB8062815DA5400A0CCCE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EB8052815DA5400A0CCCE /* TabBarViewController.swift */; };
 		788832DC2815E6E800954B90 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788832DB2815E6E800954B90 /* FeedViewController.swift */; };
-		788832DE2815E81800954B90 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788832DD2815E81800954B90 /* ProfileViewController.swift */; };
+		788832DE2815E81800954B90 /* ___ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788832DD2815E81800954B90 /* ___ProfileViewController.swift */; };
 		788832E02815EA6400954B90 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788832DF2815EA6400954B90 /* PostViewController.swift */; };
 		788832E22816D4FD00954B90 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788832E12816D4FD00954B90 /* InfoViewController.swift */; };
 		789644422811A8330089F6C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789644412811A8330089F6C6 /* AppDelegate.swift */; };
 		7896444B2811A8340089F6C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7896444A2811A8340089F6C6 /* Assets.xcassets */; };
 		7896444E2811A8340089F6C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7896444C2811A8340089F6C6 /* LaunchScreen.storyboard */; };
+		78AF5959281C27DB00CE253D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF5958281C27DB00CE253D /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		781EB8052815DA5400A0CCCE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		788832DB2815E6E800954B90 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
-		788832DD2815E81800954B90 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		788832DD2815E81800954B90 /* ___ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___ProfileViewController.swift"; sourceTree = "<group>"; };
 		788832DF2815EA6400954B90 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		788832E12816D4FD00954B90 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		7896443E2811A8330089F6C6 /* Netology_IB_Instruments'.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Netology_IB_Instruments'.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -28,6 +29,7 @@
 		7896444A2811A8340089F6C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7896444D2811A8340089F6C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7896444F2811A8340089F6C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78AF5958281C27DB00CE253D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7818F6EE281C2770003ACAD7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				78AF5958281C27DB00CE253D /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		789644352811A8330089F6C6 = {
 			isa = PBXGroup;
 			children = (
@@ -60,12 +70,13 @@
 		789644402811A8330089F6C6 /* Netology_IB_Instruments' */ = {
 			isa = PBXGroup;
 			children = (
+				7818F6EE281C2770003ACAD7 /* Profile */,
 				789644412811A8330089F6C6 /* AppDelegate.swift */,
 				788832DB2815E6E800954B90 /* FeedViewController.swift */,
-				788832DD2815E81800954B90 /* ProfileViewController.swift */,
 				788832DF2815EA6400954B90 /* PostViewController.swift */,
 				788832E12816D4FD00954B90 /* InfoViewController.swift */,
 				781EB8052815DA5400A0CCCE /* TabBarViewController.swift */,
+				788832DD2815E81800954B90 /* ___ProfileViewController.swift */,
 				7896444A2811A8340089F6C6 /* Assets.xcassets */,
 				7896444C2811A8340089F6C6 /* LaunchScreen.storyboard */,
 				7896444F2811A8340089F6C6 /* Info.plist */,
@@ -146,7 +157,8 @@
 				788832E02815EA6400954B90 /* PostViewController.swift in Sources */,
 				781EB8062815DA5400A0CCCE /* TabBarViewController.swift in Sources */,
 				788832E22816D4FD00954B90 /* InfoViewController.swift in Sources */,
-				788832DE2815E81800954B90 /* ProfileViewController.swift in Sources */,
+				788832DE2815E81800954B90 /* ___ProfileViewController.swift in Sources */,
+				78AF5959281C27DB00CE253D /* ProfileViewController.swift in Sources */,
 				789644422811A8330089F6C6 /* AppDelegate.swift in Sources */,
 				788832DC2815E6E800954B90 /* FeedViewController.swift in Sources */,
 			);
