@@ -28,7 +28,7 @@ class ProfileViewController: UIViewController {
         NSLayoutConstraint.activate([
             headerView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 220)
+            headerView.heightAnchor.constraint(equalToConstant: 250)//в 220 не влезло
 //            headerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }

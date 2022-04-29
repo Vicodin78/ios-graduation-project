@@ -60,8 +60,8 @@ class ProfileHeaderView: UIView {
         buttonAct.layer.shadowRadius = 4
         buttonAct.layer.borderColor = UIColor.black.cgColor
         buttonAct.layer.shadowOpacity = 0.7
-        buttonAct.setTitle("Show status", for: .normal)
-        buttonAct.addTarget(ProfileHeaderView.self, action: #selector(buttonPressed), for: .touchUpInside)
+        buttonAct.setTitle("Set status", for: .normal)
+        buttonAct.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return buttonAct
     }()
     
@@ -77,13 +77,26 @@ class ProfileHeaderView: UIView {
         textField.textColor = .black
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.leftViewMode = .always
-        textField.addTarget(ProfileHeaderView.self, action: #selector(statusTextChanged), for: .editingChanged)
+        textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         return textField
+    }()
+    
+    let someButton: UIButton = {
+        let someButton = UIButton()
+        someButton.translatesAutoresizingMaskIntoConstraints = false
+        someButton.backgroundColor = .systemMint
+        someButton.layer.cornerRadius = 14//В задании стоит 4, но тогда не выглядит как на макете
+        someButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        someButton.layer.shadowRadius = 4
+        someButton.layer.borderColor = UIColor.black.cgColor
+        someButton.layer.shadowOpacity = 0.7
+        someButton.setTitle("Some Button", for: .normal)
+        return someButton
     }()
     
     func layout() {
         
-        [myView, avatarImageView, titleLabel, secondTitle, buttonAct].forEach{addSubview($0)}
+        [myView, avatarImageView, titleLabel, secondTitle, buttonAct, textField, someButton].forEach{addSubview($0)}
         
         NSLayoutConstraint.activate([
             myView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -106,14 +119,27 @@ class ProfileHeaderView: UIView {
         
         NSLayoutConstraint.activate([
             secondTitle.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            secondTitle.bottomAnchor.constraint(equalTo: buttonAct.topAnchor, constant: -34)
+            secondTitle.bottomAnchor.constraint(equalTo: buttonAct.topAnchor, constant: -64)
         ])
         
         NSLayoutConstraint.activate([
-            buttonAct.topAnchor.constraint(equalTo: avatarImageView.safeAreaLayoutGuide.bottomAnchor, constant: 16),
+            buttonAct.topAnchor.constraint(equalTo: avatarImageView.safeAreaLayoutGuide.bottomAnchor, constant: 36),
             buttonAct.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             buttonAct.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32),
             buttonAct.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            textField.topAnchor.constraint(equalTo: secondTitle.bottomAnchor, constant: 12),
+            textField.leadingAnchor.constraint(equalTo: secondTitle.leadingAnchor, constant: -3),
+            textField.heightAnchor.constraint(equalToConstant: 40),
+            textField.trailingAnchor.constraint(equalTo: buttonAct.trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            someButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            someButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            someButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
