@@ -16,7 +16,7 @@ class ProfileHeaderView: UIView {
     private var statusText: String?
     
     let secondTitle: UILabel = {
-        let secondTitle = UILabel(frame: CGRect(x: 135, y: (UIScreen.main.bounds.height * 0.1) + 82, width: 200, height: 16))
+        let secondTitle = UILabel(frame: CGRect(x: 135, y: 82, width: 200, height: 16))
         secondTitle.text = "Waiting for something..."
         secondTitle.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
         secondTitle.textColor = .gray
@@ -24,6 +24,7 @@ class ProfileHeaderView: UIView {
     }()
     
     func custom() {
+        
         let myView: UIView = {
             let myView = UIView(frame: CGRect(x: 0, y: indent, width: width, height: heigth - indent))
             myView.backgroundColor = UIColor.lightGray
@@ -82,6 +83,7 @@ class ProfileHeaderView: UIView {
             return textField
         }()
         myView.addSubview(textField)
+        myView.addSubview(secondTitle)
     }
     
     @objc func buttonPressed() {
