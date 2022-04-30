@@ -15,14 +15,14 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         headerView.layout()
-        second()
+        customHeaderView()
     }
     
-    func second() {
+    func customHeaderView() {
         
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.backgroundColor = .lightGray
-
+        
         [headerView].forEach {view.addSubview($0)}
 
         NSLayoutConstraint.activate([

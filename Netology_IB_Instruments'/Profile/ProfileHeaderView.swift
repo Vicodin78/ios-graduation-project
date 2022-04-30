@@ -9,10 +9,6 @@ import UIKit
 
 class ProfileHeaderView: UIView {
 
-    private let indent = UIScreen.main.bounds.height * 0.1
-    private let width = UIScreen.main.bounds.width
-    private let heigth = UIScreen.main.bounds.height
-    
     private var statusText: String?
     
     let myView: UIView = {
