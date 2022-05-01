@@ -28,7 +28,6 @@ class LogInViewController: UIViewController {
         stack.layer.borderWidth = 0.5
         stack.layer.cornerRadius = 10
         stack.backgroundColor = .systemGray6
-//        stack.distribution = .fillEqually
         return stack
     }()
     
@@ -43,7 +42,7 @@ class LogInViewController: UIViewController {
         return $0
     }(UITextField())
     
-    let line: UIView = {
+    let lineBetweenTextFields: UIView = {
         $0.backgroundColor = .lightGray
         return $0
     }(UIView())
@@ -63,7 +62,7 @@ class LogInViewController: UIViewController {
     private func customLogInView() {
         view.backgroundColor = .white
         
-        [loginTextField, line, passTextField].forEach { stackLogIn.addArrangedSubview($0)}
+        [loginTextField, lineBetweenTextFields, passTextField].forEach { stackLogIn.addArrangedSubview($0)}
         
         [logoImg, stackLogIn].forEach { view.addSubview($0) }
         
@@ -71,20 +70,16 @@ class LogInViewController: UIViewController {
             logoImg.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 120),
             logoImg.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImg.heightAnchor.constraint(equalToConstant: 100),
-            logoImg.widthAnchor.constraint(equalToConstant: 100)
-        ])
+            logoImg.widthAnchor.constraint(equalToConstant: 100),
         
-        NSLayoutConstraint.activate([
             stackLogIn.topAnchor.constraint(equalTo: logoImg.bottomAnchor, constant: 120),
             stackLogIn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stackLogIn.heightAnchor.constraint(equalToConstant: 100),
-            stackLogIn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-        ])
-        
-        NSLayoutConstraint.activate([
+            stackLogIn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+       
             loginTextField.heightAnchor.constraint(equalToConstant: 50),
             passTextField.heightAnchor.constraint(equalToConstant: 50),
-            line.heightAnchor.constraint(equalToConstant: 0.5)
+            lineBetweenTextFields.heightAnchor.constraint(equalToConstant: 0.5)
         ])
         
     }
