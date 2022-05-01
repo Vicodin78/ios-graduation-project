@@ -13,11 +13,11 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray6
         customHeaderView()
     }
     
     func customHeaderView() {
+        view.backgroundColor = .systemGray6
         
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.backgroundColor = .lightGray
@@ -28,7 +28,6 @@ class ProfileViewController: UIViewController {
             headerView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 250)//в 220 не влезло
-//            headerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

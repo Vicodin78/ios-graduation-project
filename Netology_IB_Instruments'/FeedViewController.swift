@@ -13,8 +13,6 @@ class FeedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray4
-//        buttonFeedVC()
         layoutStack()
     }
     
@@ -28,6 +26,8 @@ class FeedViewController: UIViewController {
     }()
     
     private func layoutStack() {
+        view.backgroundColor = .systemGray4
+        
         view.addSubview(stackView)
         
         [firstButtonFeedVC, secondButtonFeedVC].forEach {stackView.addArrangedSubview($0)}

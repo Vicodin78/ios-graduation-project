@@ -23,7 +23,6 @@ class ProfileHeaderView: UIView {
     let myView: UIView = {
         let myView = UIView()
         myView.translatesAutoresizingMaskIntoConstraints = false
-//        myView.backgroundColor = UIColor.lightGray
         return myView
     }()
     
@@ -107,41 +106,29 @@ class ProfileHeaderView: UIView {
             myView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
 //            myView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             myView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-            myView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.79)
-        ])
+            myView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.79),
         
-        NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             avatarImageView.widthAnchor.constraint(equalToConstant: 100),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 100)
-        ])
-        
-        NSLayoutConstraint.activate([
+            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
+       
             titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
-            titleLabel.leadingAnchor.constraint(equalTo: avatarImageView.safeAreaLayoutGuide.trailingAnchor, constant: 20)
-        ])
+            titleLabel.leadingAnchor.constraint(equalTo: avatarImageView.safeAreaLayoutGuide.trailingAnchor, constant: 20),
         
-        NSLayoutConstraint.activate([
             secondTitle.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            secondTitle.bottomAnchor.constraint(equalTo: buttonAct.topAnchor, constant: -64)
-        ])
+            secondTitle.bottomAnchor.constraint(equalTo: buttonAct.topAnchor, constant: -64),
         
-        NSLayoutConstraint.activate([
             buttonAct.topAnchor.constraint(equalTo: avatarImageView.safeAreaLayoutGuide.bottomAnchor, constant: 36),
             buttonAct.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             buttonAct.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32),
-            buttonAct.heightAnchor.constraint(equalToConstant: 50)
-        ])
+            buttonAct.heightAnchor.constraint(equalToConstant: 50),
         
-        NSLayoutConstraint.activate([
             textField.topAnchor.constraint(equalTo: secondTitle.bottomAnchor, constant: 12),
             textField.leadingAnchor.constraint(equalTo: secondTitle.leadingAnchor, constant: -3),
             textField.heightAnchor.constraint(equalToConstant: 40),
-            textField.trailingAnchor.constraint(equalTo: buttonAct.trailingAnchor)
-        ])
+            textField.trailingAnchor.constraint(equalTo: buttonAct.trailingAnchor),
         
-        NSLayoutConstraint.activate([
             someButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
             someButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             someButton.heightAnchor.constraint(equalToConstant: 40)
