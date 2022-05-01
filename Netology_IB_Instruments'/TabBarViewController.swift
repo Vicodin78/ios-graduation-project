@@ -10,7 +10,8 @@ import UIKit
 class TabBarViewController: UITabBarController {
     
     let feedViewController = FeedViewController()
-    let profileViewController = ProfileViewController()
+    let logInViewController = LogInViewController()
+//    let profileViewController = ProfileViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,15 +20,17 @@ class TabBarViewController: UITabBarController {
     
     private func setupViewController() {
         let firstVC = UINavigationController(rootViewController: feedViewController)
-        let secondVC = UINavigationController(rootViewController: profileViewController)
+        let secondVC = UINavigationController(rootViewController: logInViewController)
+//        let secondVC = UINavigationController(rootViewController: profileViewController)
         
         feedViewController.tabBarItem.title = "Лента"
         feedViewController.navigationItem.title = "FeedView"
         feedViewController.tabBarItem.image = UIImage(systemName: "newspaper")
         
-        profileViewController.tabBarItem.title = "Профиль"
-        profileViewController.navigationItem.title = "ProfileView"
-        profileViewController.tabBarItem.image = UIImage(systemName: "person.fill")
+        logInViewController.tabBarItem.title = "Профиль"
+        logInViewController.navigationItem.title = "ProfileView"
+        logInViewController.tabBarItem.image = UIImage(systemName: "person.fill")
+        secondVC.navigationBar.isHidden = true
         
         viewControllers = [firstVC, secondVC]
     }
