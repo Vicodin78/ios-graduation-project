@@ -20,13 +20,13 @@ class ProfileHeaderView: UIView {
     
     private var statusText: String?
     
-    let myView: UIView = {
+    private let myView: UIView = {
         let myView = UIView()
         myView.translatesAutoresizingMaskIntoConstraints = false
         return myView
     }()
     
-    let avatarImageView: UIImageView = {
+    private let avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.image = UIImage(named: "panda")
@@ -38,7 +38,7 @@ class ProfileHeaderView: UIView {
         return avatarImageView
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = "Hipster Panda"
@@ -46,7 +46,7 @@ class ProfileHeaderView: UIView {
         return titleLabel
     }()
     
-    let secondTitle: UILabel = {
+    private let secondTitle: UILabel = {
         let secondTitle = UILabel()
         secondTitle.translatesAutoresizingMaskIntoConstraints = false
         secondTitle.text = "Waiting for something..."
@@ -55,7 +55,7 @@ class ProfileHeaderView: UIView {
         return secondTitle
     }()
     
-    let buttonAct: UIButton = {
+    private let buttonAct: UIButton = {
         let buttonAct = UIButton()
         buttonAct.translatesAutoresizingMaskIntoConstraints = false
         buttonAct.backgroundColor = .systemBlue
@@ -69,7 +69,7 @@ class ProfileHeaderView: UIView {
         return buttonAct
     }()
     
-    let textField: UITextField = {
+    private let textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
@@ -85,7 +85,7 @@ class ProfileHeaderView: UIView {
         return textField
     }()
     
-    let someButton: UIButton = {
+    private let someButton: UIButton = {
         let someButton = UIButton()
         someButton.translatesAutoresizingMaskIntoConstraints = false
         someButton.backgroundColor = .systemMint
@@ -98,7 +98,7 @@ class ProfileHeaderView: UIView {
         return someButton
     }()
     
-    func layout() {
+    private func layout() {
         
         [myView, avatarImageView, titleLabel, secondTitle, buttonAct, textField, someButton].forEach{addSubview($0)}
         

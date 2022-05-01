@@ -9,14 +9,14 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    let headerView = ProfileHeaderView()
+    private let headerView = ProfileHeaderView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         customHeaderView()
     }
     
-    func customHeaderView() {
+    private func customHeaderView() {
         view.backgroundColor = .systemGray6
         
         headerView.translatesAutoresizingMaskIntoConstraints = false
