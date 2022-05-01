@@ -52,7 +52,6 @@ class ProfileHeaderView: UIView {
             return titleLabel
         }()
         myView.addSubview(titleLabel)
-//        statusPrint = titleLabel.text
         
         let buttonAct: UIButton = {
             let buttonAct = UIButton(frame: CGRect(x: 16, y: 162, width: width - 32, height: 50))
@@ -88,9 +87,6 @@ class ProfileHeaderView: UIView {
     
     @objc func buttonPressed() {
         secondTitle.text = statusText
-//        if let statusPrint = statusPrint {
-//            print(statusPrint)
-//        }
     }
     
     @objc func statusTextChanged(_ textField: UITextField) {
