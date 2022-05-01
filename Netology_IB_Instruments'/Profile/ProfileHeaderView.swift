@@ -15,7 +15,7 @@ class ProfileHeaderView: UIView {
     
     private var statusText: String?
     
-    let secondTitle: UILabel = {
+    private let secondTitle: UILabel = {
         let secondTitle = UILabel(frame: CGRect(x: 135, y: 82, width: 200, height: 16))
         secondTitle.text = "Waiting for something..."
         secondTitle.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
@@ -23,7 +23,16 @@ class ProfileHeaderView: UIView {
         return secondTitle
     }()
     
-    func custom() {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        custom()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func custom() {
         
         let myView: UIView = {
             let myView = UIView(frame: CGRect(x: 0, y: indent, width: width, height: heigth - indent))
@@ -56,7 +65,7 @@ class ProfileHeaderView: UIView {
         let buttonAct: UIButton = {
             let buttonAct = UIButton(frame: CGRect(x: 16, y: 162, width: width - 32, height: 50))
             buttonAct.backgroundColor = .systemBlue
-            buttonAct.layer.cornerRadius = 14//В задании стоит 4, но тогда не выглядит как на макете
+            buttonAct.layer.cornerRadius = 14
             buttonAct.layer.shadowOffset = CGSize(width: 4, height: 4)
             buttonAct.layer.shadowRadius = 4
             buttonAct.layer.borderColor = UIColor.black.cgColor
@@ -85,11 +94,11 @@ class ProfileHeaderView: UIView {
         myView.addSubview(secondTitle)
     }
     
-    @objc func buttonPressed() {
+    @objc private func buttonPressed() {
         secondTitle.text = statusText
     }
     
-    @objc func statusTextChanged(_ textField: UITextField) {
+    @objc private func statusTextChanged(_ textField: UITextField) {
         statusText = textField.text
     }
 }
