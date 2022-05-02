@@ -1,6 +1,16 @@
 {
   "colors" : [
     {
+      "color" : {
+        "color-space" : "srgb",
+        "components" : {
+          "alpha" : "1.000",
+          "blue" : "0xCC",
+          "green" : "0x85",
+          "red" : "0x48"
+        }
+      },
+      "filename" : "blue_pixel.png",
       "idiom" : "universal"
     }
   ],

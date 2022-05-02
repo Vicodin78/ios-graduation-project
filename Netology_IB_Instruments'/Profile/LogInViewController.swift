@@ -8,11 +8,8 @@
 import UIKit
 
 class LogInViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        customLogInView()
-    }
+    
+    private let notifCenter = NotificationCenter.default
     
     private let logoImg: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -28,10 +25,11 @@ class LogInViewController: UIViewController {
         stack.layer.borderWidth = 0.5
         stack.layer.cornerRadius = 10
         stack.backgroundColor = .systemGray6
+        stack.tintColor = UIColor(named: "AccentColor")
         return stack
     }()
     
-    private let loginTextField: UITextField = {
+    private lazy var loginTextField: UITextField = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.placeholder = "Email of phone"
         $0.textColor = .black
@@ -39,6 +37,7 @@ class LogInViewController: UIViewController {
         $0.autocapitalizationType = .none
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: $0.frame.height))
         $0.leftViewMode = .always
+        $0.delegate = self
         return $0
     }(UITextField())
     
@@ -47,7 +46,7 @@ class LogInViewController: UIViewController {
         return $0
     }(UIView())
     
-    private let passTextField: UITextField = {
+    private lazy var passTextField: UITextField = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.placeholder = "Password"
         $0.textColor = .black
@@ -55,6 +54,7 @@ class LogInViewController: UIViewController {
         $0.autocapitalizationType = .none
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: $0.frame.height))
         $0.leftViewMode = .always
+        $0.delegate = self
         $0.isSecureTextEntry = true
         return $0
     }(UITextField())
@@ -63,31 +63,95 @@ class LogInViewController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitle("Log In", for: .normal)
         $0.setTitleColor(.white, for: .normal)
-        $0.backgroundColor = UIColor("#4885CC", alpha: 1)
-//        $0.setBackgroundImage(UIImage(named: "blue_pixel"), for: .highlighted)
-//        $0.backgroundImage(for: .disabled)
-//        $0.backgroundImage(for: .selected)
+//        $0.backgroundColor = UIColor("#4885CC", alpha: 1)
+        let imgNormal = UIImage(named: "blue_pixel")!.alpha(1.0)
+        let imgOther = UIImage(named: "blue_pixel")!.alpha(0.8)
+        $0.setBackgroundImage(imgNormal, for: .normal)
+        $0.setBackgroundImage(imgOther, for: .selected)
+        $0.setBackgroundImage(imgOther, for: .highlighted)
+        $0.setBackgroundImage(imgOther, for: .disabled)
+        $0.addTarget(self, action: #selector(activeLogIn), for: .touchUpInside)
         $0.layer.cornerRadius = 10
+        $0.clipsToBounds = true
         return $0
     }(UIButton())
+    
+    private let profileVC = ProfileViewController()
+    
+    @objc private func activeLogIn() {
+        profileVC.modalPresentationStyle = .fullScreen //дорога в один конец
+        present(profileVC, animated: true)
+    }
+    
+    private let scrollView: UIScrollView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        return $0
+    }(UIScrollView())
+    
+    private let contentView: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .white
+        return $0
+    }(UIView())
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        customLogInView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        notifCenter.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notifCenter.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        notifCenter.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        notifCenter.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            scrollView.contentInset.bottom = keyboardSize.height
+            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        }
+    }
+    
+    @objc private func keyboardHide(notification: NSNotification) {
+        scrollView.contentInset = .zero
+        scrollView.verticalScrollIndicatorInsets = .zero
+    }
     
     private func customLogInView() {
         view.backgroundColor = .white
         
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        [logoImg, stackLogIn, buttonLogIn].forEach { contentView.addSubview($0) }
+        
         [loginTextField, lineBetweenTextFields, passTextField].forEach { stackLogIn.addArrangedSubview($0)}
         
-        [logoImg, stackLogIn, buttonLogIn].forEach { view.addSubview($0) }
-        
         NSLayoutConstraint.activate([
-            logoImg.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 120),
-            logoImg.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            logoImg.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
+            logoImg.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             logoImg.heightAnchor.constraint(equalToConstant: 100),
             logoImg.widthAnchor.constraint(equalToConstant: 100),
         
             stackLogIn.topAnchor.constraint(equalTo: logoImg.bottomAnchor, constant: 120),
-            stackLogIn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stackLogIn.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             stackLogIn.heightAnchor.constraint(equalToConstant: 100),
-            stackLogIn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            stackLogIn.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
        
             loginTextField.heightAnchor.constraint(equalToConstant: 50),
             passTextField.heightAnchor.constraint(equalToConstant: 50),
@@ -96,30 +160,17 @@ class LogInViewController: UIViewController {
             buttonLogIn.topAnchor.constraint(equalTo: stackLogIn.bottomAnchor, constant: 16),
             buttonLogIn.leadingAnchor.constraint(equalTo: stackLogIn.leadingAnchor),
             buttonLogIn.trailingAnchor.constraint(equalTo: stackLogIn.trailingAnchor),
-            buttonLogIn.heightAnchor.constraint(equalToConstant: 50)
+            buttonLogIn.heightAnchor.constraint(equalToConstant: 50),
+            buttonLogIn.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 }
 
-extension UIColor {
-  
-  convenience init(_ hex: String, alpha: CGFloat = 1.0) {
-    var cString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-    
-    if cString.hasPrefix("#") { cString.removeFirst() }
-    
-    if cString.count != 6 {
-      self.init("ff0000")
-      return
-    }
-    
-    var rgbValue: UInt64 = 0
-    Scanner(string: cString).scanHexInt64(&rgbValue)
-    
-    self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-              green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-              blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-              alpha: alpha)
-  }
+// MARK: - UITextFieldDelegate
 
+extension LogInViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
 }

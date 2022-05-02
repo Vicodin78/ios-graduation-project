@@ -17,6 +17,7 @@
 		78AF595E281ED10B00CE253D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF595D281ED10B00CE253D /* ProfileViewController.swift */; };
 		78AF5960281ED6CF00CE253D /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF595F281ED6CF00CE253D /* ProfileHeaderView.swift */; };
 		78AF5962281EDBA200CE253D /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF5961281EDBA200CE253D /* LogInViewController.swift */; };
+		78AF5966281FD41000CE253D /* UIImage+Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF5965281FD41000CE253D /* UIImage+Alpha.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		78AF595D281ED10B00CE253D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		78AF595F281ED6CF00CE253D /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		78AF5961281EDBA200CE253D /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		78AF5965281FD41000CE253D /* UIImage+Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Alpha.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				78AF5961281EDBA200CE253D /* LogInViewController.swift */,
 				78AF595D281ED10B00CE253D /* ProfileViewController.swift */,
 				78AF595F281ED6CF00CE253D /* ProfileHeaderView.swift */,
+				78AF5965281FD41000CE253D /* UIImage+Alpha.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			files = (
 				788832E02815EA6400954B90 /* PostViewController.swift in Sources */,
 				781EB8062815DA5400A0CCCE /* TabBarViewController.swift in Sources */,
+				78AF5966281FD41000CE253D /* UIImage+Alpha.swift in Sources */,
 				788832E22816D4FD00954B90 /* InfoViewController.swift in Sources */,
 				78AF595E281ED10B00CE253D /* ProfileViewController.swift in Sources */,
 				78AF5962281EDBA200CE253D /* LogInViewController.swift in Sources */,
