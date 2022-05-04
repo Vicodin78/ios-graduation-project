@@ -23,7 +23,6 @@ class ProfileHeaderView: UIView {
     private let myView: UIView = {
         let myView = UIView()
         myView.translatesAutoresizingMaskIntoConstraints = false
-//        myView.backgroundColor = UIColor.lightGray
         return myView
     }()
     
@@ -60,7 +59,7 @@ class ProfileHeaderView: UIView {
         let buttonAct = UIButton()
         buttonAct.translatesAutoresizingMaskIntoConstraints = false
         buttonAct.backgroundColor = .systemBlue
-        buttonAct.layer.cornerRadius = 14//В задании стоит 4, но тогда не выглядит как на макете
+        buttonAct.layer.cornerRadius = 14
         buttonAct.layer.shadowOffset = CGSize(width: 4, height: 4)
         buttonAct.layer.shadowRadius = 4
         buttonAct.layer.borderColor = UIColor.black.cgColor
@@ -104,10 +103,6 @@ class ProfileHeaderView: UIView {
         [myView, avatarImageView, titleLabel, secondTitle, buttonAct, textField, someButton].forEach{addSubview($0)}
         
         NSLayoutConstraint.activate([
-//            myView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-////            myView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-//            myView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-//            myView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.79),
         
             avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
