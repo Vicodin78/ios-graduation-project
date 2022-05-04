@@ -9,16 +9,15 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    let secondPost = Post(title: "PostViewController")
+    private let secondPost = Post(title: "PostViewController")
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray4
-//        buttonFeedVC()
         layoutStack()
     }
     
-    let stackView: UIStackView = {
+    private let stackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.spacing = 10
@@ -39,7 +38,7 @@ class FeedViewController: UIViewController {
         ])
     }
     
-    let firstButtonFeedVC: UIButton = {
+    private lazy var firstButtonFeedVC: UIButton = {
         let button = UIButton()
         button.setTitle("PostVC", for: .normal)
         button.backgroundColor = .systemCyan
@@ -47,7 +46,7 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-    let secondButtonFeedVC: UIButton = {
+    private lazy var secondButtonFeedVC: UIButton = {
         let button = UIButton()
         button.setTitle("PostVCtoo", for: .normal)
         button.backgroundColor = .systemCyan

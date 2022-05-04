@@ -20,14 +20,14 @@ class ProfileHeaderView: UIView {
     
     private var statusText: String?
     
-    let myView: UIView = {
+    private let myView: UIView = {
         let myView = UIView()
         myView.translatesAutoresizingMaskIntoConstraints = false
 //        myView.backgroundColor = UIColor.lightGray
         return myView
     }()
     
-    let avatarImageView: UIImageView = {
+    private let avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.image = UIImage(named: "panda")
@@ -39,7 +39,7 @@ class ProfileHeaderView: UIView {
         return avatarImageView
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = "Hipster Panda"
@@ -47,7 +47,7 @@ class ProfileHeaderView: UIView {
         return titleLabel
     }()
     
-    let secondTitle: UILabel = {
+    private let secondTitle: UILabel = {
         let secondTitle = UILabel()
         secondTitle.translatesAutoresizingMaskIntoConstraints = false
         secondTitle.text = "Waiting for something..."
@@ -56,7 +56,7 @@ class ProfileHeaderView: UIView {
         return secondTitle
     }()
     
-    let buttonAct: UIButton = {
+    private lazy var buttonAct: UIButton = {
         let buttonAct = UIButton()
         buttonAct.translatesAutoresizingMaskIntoConstraints = false
         buttonAct.backgroundColor = .systemBlue
@@ -70,7 +70,7 @@ class ProfileHeaderView: UIView {
         return buttonAct
     }()
     
-    let textField: UITextField = {
+    private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
@@ -86,11 +86,11 @@ class ProfileHeaderView: UIView {
         return textField
     }()
     
-    let someButton: UIButton = {
+    private let someButton: UIButton = {
         let someButton = UIButton()
         someButton.translatesAutoresizingMaskIntoConstraints = false
         someButton.backgroundColor = .systemMint
-        someButton.layer.cornerRadius = 14//В задании стоит 4, но тогда не выглядит как на макете
+        someButton.layer.cornerRadius = 14
         someButton.layer.shadowOffset = CGSize(width: 4, height: 4)
         someButton.layer.shadowRadius = 4
         someButton.layer.borderColor = UIColor.black.cgColor
@@ -99,64 +99,50 @@ class ProfileHeaderView: UIView {
         return someButton
     }()
     
-    func layout() {
+    private func layout() {
         
         [myView, avatarImageView, titleLabel, secondTitle, buttonAct, textField, someButton].forEach{addSubview($0)}
         
         NSLayoutConstraint.activate([
-            myView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-//            myView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            myView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-            myView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.79)
-        ])
+//            myView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+////            myView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+//            myView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+//            myView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.79),
         
-        NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             avatarImageView.widthAnchor.constraint(equalToConstant: 100),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 100)
-        ])
+            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
         
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
-            titleLabel.leadingAnchor.constraint(equalTo: avatarImageView.safeAreaLayoutGuide.trailingAnchor, constant: 20)
-        ])
-        
-        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
+            titleLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 20),
+
             secondTitle.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            secondTitle.bottomAnchor.constraint(equalTo: buttonAct.topAnchor, constant: -64)
-        ])
+            secondTitle.bottomAnchor.constraint(equalTo: buttonAct.topAnchor, constant: -64),
         
-        NSLayoutConstraint.activate([
-            buttonAct.topAnchor.constraint(equalTo: avatarImageView.safeAreaLayoutGuide.bottomAnchor, constant: 36),
+            buttonAct.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 36),
             buttonAct.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             buttonAct.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32),
-            buttonAct.heightAnchor.constraint(equalToConstant: 50)
-        ])
+            buttonAct.heightAnchor.constraint(equalToConstant: 50),
         
-        NSLayoutConstraint.activate([
             textField.topAnchor.constraint(equalTo: secondTitle.bottomAnchor, constant: 12),
             textField.leadingAnchor.constraint(equalTo: secondTitle.leadingAnchor, constant: -3),
             textField.heightAnchor.constraint(equalToConstant: 40),
-            textField.trailingAnchor.constraint(equalTo: buttonAct.trailingAnchor)
-        ])
+            textField.trailingAnchor.constraint(equalTo: buttonAct.trailingAnchor),
         
-        NSLayoutConstraint.activate([
+            someButton.topAnchor.constraint(equalTo: buttonAct.bottomAnchor, constant: 10),
             someButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-            someButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            someButton.heightAnchor.constraint(equalToConstant: 40)
+            someButton.heightAnchor.constraint(equalToConstant: 40),
+            someButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
     }
     
     
-    @objc func buttonPressed() {
+    @objc private func buttonPressed() {
         secondTitle.text = statusText
-//        if let statusPrint = statusPrint {
-//            print(statusPrint)
-//        }
     }
     
-    @objc func statusTextChanged(_ textField: UITextField) {
+    @objc private func statusTextChanged(_ textField: UITextField) {
         statusText = textField.text
     }
 }

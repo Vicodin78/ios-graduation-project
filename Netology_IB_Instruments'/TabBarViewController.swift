@@ -11,7 +11,6 @@ class TabBarViewController: UITabBarController {
     
     let feedViewController = FeedViewController()
     let logInViewController = LogInViewController()
-//    let profileViewController = ProfileViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +20,6 @@ class TabBarViewController: UITabBarController {
     private func setupViewController() {
         let firstVC = UINavigationController(rootViewController: feedViewController)
         let secondVC = UINavigationController(rootViewController: logInViewController)
-//        let secondVC = UINavigationController(rootViewController: profileViewController)
         
         feedViewController.tabBarItem.title = "Лента"
         feedViewController.navigationItem.title = "FeedView"

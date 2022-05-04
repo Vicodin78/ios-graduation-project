@@ -59,7 +59,7 @@ class LogInViewController: UIViewController {
         return $0
     }(UITextField())
     
-    private let buttonLogIn: UIButton = {
+    private lazy var buttonLogIn: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitle("Log In", for: .normal)
         $0.setTitleColor(.white, for: .normal)
@@ -76,12 +76,12 @@ class LogInViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let profileVC = ProfileViewController()
-    
     @objc private func activeLogIn() {
         profileVC.modalPresentationStyle = .fullScreen //дорога в один конец
         present(profileVC, animated: true)
     }
+    
+    private let profileVC = ProfileViewController()
     
     private let scrollView: UIScrollView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
