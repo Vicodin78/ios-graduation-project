@@ -35,6 +35,7 @@ class ProfileViewController: UIViewController {
         [tableView].forEach {view.addSubview($0)}
         
         NSLayoutConstraint.activate([
+            
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),

@@ -105,19 +105,22 @@ class ProfileHeaderView: UIView {
         NSLayoutConstraint.activate([
         
             avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             avatarImageView.widthAnchor.constraint(equalToConstant: 100),
             avatarImageView.heightAnchor.constraint(equalToConstant: 100),
         
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             titleLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
 
             secondTitle.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             secondTitle.bottomAnchor.constraint(equalTo: buttonAct.topAnchor, constant: -64),
+            secondTitle.trailingAnchor.constraint(equalTo: trailingAnchor),
         
             buttonAct.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 36),
             buttonAct.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            buttonAct.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32),
+            buttonAct.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             buttonAct.heightAnchor.constraint(equalToConstant: 50),
         
             textField.topAnchor.constraint(equalTo: secondTitle.bottomAnchor, constant: 12),
@@ -126,7 +129,8 @@ class ProfileHeaderView: UIView {
             textField.trailingAnchor.constraint(equalTo: buttonAct.trailingAnchor),
         
             someButton.topAnchor.constraint(equalTo: buttonAct.bottomAnchor, constant: 10),
-            someButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            someButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            someButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             someButton.heightAnchor.constraint(equalToConstant: 40),
             someButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])

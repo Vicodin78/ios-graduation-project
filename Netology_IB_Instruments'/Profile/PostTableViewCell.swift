@@ -90,6 +90,8 @@ class PostTableViewCell: UITableViewCell {
             imageViewPost.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: insert),
             imageViewPost.widthAnchor.constraint(equalToConstant: widthHeight),
             imageViewPost.heightAnchor.constraint(equalToConstant: widthHeight),
+            imageViewPost.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor),
+            imageViewPost.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor),
             
             descriptionLabel.topAnchor.constraint(equalTo: imageViewPost.bottomAnchor, constant: insert),
             descriptionLabel.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor, constant: insert),
