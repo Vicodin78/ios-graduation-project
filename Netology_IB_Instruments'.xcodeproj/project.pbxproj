@@ -9,18 +9,23 @@
 /* Begin PBXBuildFile section */
 		781EB8062815DA5400A0CCCE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EB8052815DA5400A0CCCE /* TabBarViewController.swift */; };
 		788832DC2815E6E800954B90 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788832DB2815E6E800954B90 /* FeedViewController.swift */; };
-		788832DE2815E81800954B90 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788832DD2815E81800954B90 /* ProfileViewController.swift */; };
 		788832E02815EA6400954B90 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788832DF2815EA6400954B90 /* PostViewController.swift */; };
 		788832E22816D4FD00954B90 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788832E12816D4FD00954B90 /* InfoViewController.swift */; };
 		789644422811A8330089F6C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789644412811A8330089F6C6 /* AppDelegate.swift */; };
 		7896444B2811A8340089F6C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7896444A2811A8340089F6C6 /* Assets.xcassets */; };
 		7896444E2811A8340089F6C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7896444C2811A8340089F6C6 /* LaunchScreen.storyboard */; };
+		78AF595E281ED10B00CE253D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF595D281ED10B00CE253D /* ProfileViewController.swift */; };
+		78AF5960281ED6CF00CE253D /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF595F281ED6CF00CE253D /* ProfileHeaderView.swift */; };
+		78AF5962281EDBA200CE253D /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF5961281EDBA200CE253D /* LogInViewController.swift */; };
+		78AF5966281FD41000CE253D /* UIImage+Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF5965281FD41000CE253D /* UIImage+Alpha.swift */; };
+		78AF596828215FBD00CE253D /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF596728215FBD00CE253D /* PostModel.swift */; };
+		78AF596A28216D6100CE253D /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF596928216D6100CE253D /* PostTableViewCell.swift */; };
+		78AF596C2821940A00CE253D /* ExtensionUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF596B2821940A00CE253D /* ExtensionUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		781EB8052815DA5400A0CCCE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		788832DB2815E6E800954B90 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
-		788832DD2815E81800954B90 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		788832DF2815EA6400954B90 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		788832E12816D4FD00954B90 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		7896443E2811A8330089F6C6 /* Netology_IB_Instruments'.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Netology_IB_Instruments'.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -28,6 +33,13 @@
 		7896444A2811A8340089F6C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7896444D2811A8340089F6C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7896444F2811A8340089F6C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78AF595D281ED10B00CE253D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		78AF595F281ED6CF00CE253D /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		78AF5961281EDBA200CE253D /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		78AF5965281FD41000CE253D /* UIImage+Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Alpha.swift"; sourceTree = "<group>"; };
+		78AF596728215FBD00CE253D /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		78AF596928216D6100CE253D /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		78AF596B2821940A00CE253D /* ExtensionUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +72,9 @@
 		789644402811A8330089F6C6 /* Netology_IB_Instruments' */ = {
 			isa = PBXGroup;
 			children = (
+				78AF595C281ED0E300CE253D /* Profile */,
 				789644412811A8330089F6C6 /* AppDelegate.swift */,
 				788832DB2815E6E800954B90 /* FeedViewController.swift */,
-				788832DD2815E81800954B90 /* ProfileViewController.swift */,
 				788832DF2815EA6400954B90 /* PostViewController.swift */,
 				788832E12816D4FD00954B90 /* InfoViewController.swift */,
 				781EB8052815DA5400A0CCCE /* TabBarViewController.swift */,
@@ -71,6 +83,20 @@
 				7896444F2811A8340089F6C6 /* Info.plist */,
 			);
 			path = "Netology_IB_Instruments'";
+			sourceTree = "<group>";
+		};
+		78AF595C281ED0E300CE253D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				78AF5961281EDBA200CE253D /* LogInViewController.swift */,
+				78AF595D281ED10B00CE253D /* ProfileViewController.swift */,
+				78AF595F281ED6CF00CE253D /* ProfileHeaderView.swift */,
+				78AF596728215FBD00CE253D /* PostModel.swift */,
+				78AF596928216D6100CE253D /* PostTableViewCell.swift */,
+				78AF5965281FD41000CE253D /* UIImage+Alpha.swift */,
+				78AF596B2821940A00CE253D /* ExtensionUIView.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,12 +169,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78AF596A28216D6100CE253D /* PostTableViewCell.swift in Sources */,
 				788832E02815EA6400954B90 /* PostViewController.swift in Sources */,
+				78AF596828215FBD00CE253D /* PostModel.swift in Sources */,
 				781EB8062815DA5400A0CCCE /* TabBarViewController.swift in Sources */,
+				78AF5966281FD41000CE253D /* UIImage+Alpha.swift in Sources */,
 				788832E22816D4FD00954B90 /* InfoViewController.swift in Sources */,
-				788832DE2815E81800954B90 /* ProfileViewController.swift in Sources */,
+				78AF596C2821940A00CE253D /* ExtensionUIView.swift in Sources */,
+				78AF595E281ED10B00CE253D /* ProfileViewController.swift in Sources */,
+				78AF5962281EDBA200CE253D /* LogInViewController.swift in Sources */,
 				789644422811A8330089F6C6 /* AppDelegate.swift in Sources */,
 				788832DC2815E6E800954B90 /* FeedViewController.swift in Sources */,
+				78AF5960281ED6CF00CE253D /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
