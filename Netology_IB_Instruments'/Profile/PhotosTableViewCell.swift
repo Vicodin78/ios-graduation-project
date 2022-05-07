@@ -27,7 +27,6 @@ class PhotosTableViewCell: UITableViewCell {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.image = UIImage(systemName: "arrow.right")
         $0.tintColor = .black
-        $0.clipsToBounds = true
         return $0
     }(UIImageView())
     

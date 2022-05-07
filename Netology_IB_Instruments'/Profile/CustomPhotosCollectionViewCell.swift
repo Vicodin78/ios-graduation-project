@@ -11,8 +11,9 @@ class CustomPhotosCollectionViewCell: UICollectionViewCell {
     
     private let image: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .black
         $0.contentMode = .scaleToFill
+        $0.layer.cornerRadius = 6
+        $0.clipsToBounds = true
         return $0
     }(UIImageView())
     
@@ -32,8 +33,7 @@ class CustomPhotosCollectionViewCell: UICollectionViewCell {
     
     private func customizeCell() {
         contentView.backgroundColor = .red
-        contentView.layer.cornerRadius = 10
-        
+        contentView.layer.cornerRadius = 6
     }
     
     private func layout() {
