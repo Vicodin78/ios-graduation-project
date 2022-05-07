@@ -31,6 +31,40 @@ class PhotosTableViewCell: UITableViewCell {
         return $0
     }(UIImageView())
     
+    private let photoForStack1: UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.image = UIImage(named: "img10")
+//        $0.clipsToBounds = true
+        return $0
+    }(UIImageView())
+    
+    private let photoForStack2: UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.image = UIImage(named: "img11")
+//        $0.clipsToBounds = true
+        return $0
+    }(UIImageView())
+    
+    private let photoForStack3: UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.image = UIImage(named: "img12")
+//        $0.clipsToBounds = true
+        return $0
+    }(UIImageView())
+    
+    private let photoForStack4: UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.image = UIImage(named: "img13")
+//        $0.clipsToBounds = true
+        return $0
+    }(UIImageView())
+    
+    private let stackPhotos: UIStackView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.axis = .horizontal
+        return $0
+    }(UIStackView())
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
@@ -41,7 +75,9 @@ class PhotosTableViewCell: UITableViewCell {
     }
     
     private func layout() {
-        [backGrView, photosLabel, imgPhotosLab].forEach { contentView.addSubview($0)}
+        [backGrView, photosLabel, imgPhotosLab, stackPhotos].forEach { contentView.addSubview($0)}
+        
+        [photoForStack1, photoForStack2, photoForStack3, photoForStack4].forEach { stackPhotos.addArrangedSubview($0)}
         
         let insert: CGFloat = 12
         
@@ -50,16 +86,21 @@ class PhotosTableViewCell: UITableViewCell {
             backGrView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             backGrView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             backGrView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
+
             photosLabel.topAnchor.constraint(equalTo: backGrView.topAnchor, constant: insert),
             photosLabel.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor, constant: insert),
             photosLabel.bottomAnchor.constraint(equalTo: backGrView.bottomAnchor),
             photosLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2 - insert),
-            
+
             imgPhotosLab.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor, constant: -insert),
             imgPhotosLab.widthAnchor.constraint(equalTo: imgPhotosLab.heightAnchor),
             imgPhotosLab.centerYAnchor.constraint(equalTo: photosLabel.centerYAnchor),
-            imgPhotosLab.heightAnchor.constraint(equalTo: photosLabel.heightAnchor)
+            imgPhotosLab.heightAnchor.constraint(equalTo: photosLabel.heightAnchor),
+            
+            stackPhotos.topAnchor.constraint(equalTo: photosLabel.bottomAnchor),
+            stackPhotos.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor),
+            stackPhotos.bottomAnchor
+            
         ])
         
         

@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
     private let headerView = ProfileHeaderView()
     
     private lazy var tableView: UITableView = {
