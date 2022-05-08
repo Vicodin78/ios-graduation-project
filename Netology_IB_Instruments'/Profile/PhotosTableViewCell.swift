@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol PhotosTabCellDelegate: AnyObject {
+    func delegateFunc()
+}
+
 class PhotosTableViewCell: UITableViewCell {
+    
+    weak var delegate: PhotosTabCellDelegate?
     
     private let backGrView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -122,5 +128,9 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         sideInset
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.delegateFunc()
     }
 }

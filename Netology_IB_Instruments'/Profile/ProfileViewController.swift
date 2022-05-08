@@ -64,6 +64,7 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let firstCell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
+        firstCell.delegate = self
         
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
         cell.setupCell(postModel[indexPath.row])
@@ -82,8 +83,16 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let photosVC = PhotosViewController()
-//        let navPhotosVC = UINavigationController(rootViewController: photosVC)
         navigationController?.pushViewController(photosVC, animated: true)
 
     }
+}
+
+extension ProfileViewController: PhotosTabCellDelegate {
+    func delegateFunc() {
+        let photosVC = PhotosViewController()
+        navigationController?.pushViewController(photosVC, animated: true)
+    }
+    
+    
 }
