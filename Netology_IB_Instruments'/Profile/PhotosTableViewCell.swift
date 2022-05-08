@@ -30,7 +30,7 @@ class PhotosTableViewCell: UITableViewCell {
         return $0
     }(UIImageView())
     
-    lazy var profileCollectionView: UICollectionView = {
+    private lazy var profileCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -56,47 +56,40 @@ class PhotosTableViewCell: UITableViewCell {
         
         let insert: CGFloat = 12
         
+        let heightCoolection: CGFloat = (((UIScreen.main.bounds.width - insert) / CGFloat(photosModel.count)) / 4 * 3) // соотношение сторон ячейки коллекции
+        
         NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(equalToConstant: 140),
+        
+            backGrView.heightAnchor.constraint(equalToConstant: contentView.bounds.height + heightCoolection + insert), //insert - самый нижний отступ
             
-//            backGrView.topAnchor.constraint(equalTo: contentView.topAnchor),
-//            backGrView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            backGrView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-//            backGrView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//
-//            photosLabel.topAnchor.constraint(equalTo: backGrView.topAnchor, constant: insert),
-//            photosLabel.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor, constant: insert),
-////            photosLabel.bottomAnchor.constraint(equalTo: backGrView.bottomAnchor),
-//            photosLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2 - insert),
-//
-            imgPhotosLab.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -insert),
+            backGrView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            backGrView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            backGrView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            backGrView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+        
+            photosLabel.topAnchor.constraint(equalTo: backGrView.topAnchor, constant: insert),
+            photosLabel.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor, constant: insert),
+            photosLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2 - insert),
+            
+            imgPhotosLab.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor, constant: -insert),
             imgPhotosLab.centerYAnchor.constraint(equalTo: photosLabel.centerYAnchor),
             imgPhotosLab.heightAnchor.constraint(equalTo: photosLabel.heightAnchor),
             imgPhotosLab.widthAnchor.constraint(equalTo: imgPhotosLab.heightAnchor),
-
-            photosLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: insert),
-            photosLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: insert),
-            photosLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2 - insert),
             
             profileCollectionView.topAnchor.constraint(equalTo: photosLabel.bottomAnchor, constant: insert),
-            profileCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: insert),
-            profileCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -insert),
-            profileCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -insert),
+            profileCollectionView.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor, constant: insert),
+            profileCollectionView.bottomAnchor.constraint(equalTo: backGrView.bottomAnchor, constant: -insert),
+            profileCollectionView.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor, constant: -insert),
         ])
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-    private let photosModel = [UIImageView(image: UIImage(named: "img10")!), UIImageView(image: UIImage(named: "img11")!), UIImageView(image: UIImage(named: "img12")!), UIImageView(image: UIImage(named: "img13")!)]
+    private let photosModel: [UIImageView] = {
+        var arrey = [UIImageView]()
+        for i in 10...13 {
+            arrey.append(UIImageView(image: UIImage(named: "img\(i)")))
+        }
+        return arrey
+    }()
 
 }
 
@@ -114,22 +107,20 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     private var sideInset: CGFloat { return 8 }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = (collectionView.bounds.width - (sideInset * 3)) / 4
-        let height = (width / 4) * 3
-    
+        let width = (collectionView.bounds.width - (sideInset * CGFloat(photosModel.count - 1))) / CGFloat(photosModel.count)
+        let height = (width / 4) * 3 // соотношение сторон ячейки коллекции
+        
         return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         sideInset
     }
-    
-    
 }

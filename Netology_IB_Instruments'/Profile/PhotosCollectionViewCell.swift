@@ -1,18 +1,17 @@
 //
-//  CustomPhotosCollectionViewCell.swift
+//  PhotosCollectionViewCell.swift
 //  Netology_IB_Instruments'
 //
-//  Created by Vicodin on 07.05.2022.
+//  Created by Vicodin on 08.05.2022.
 //
 
 import UIKit
 
-class CustomPhotosCollectionViewCell: UICollectionViewCell {
+class PhotosCollectionViewCell: UICollectionViewCell {
     
     private let image: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.contentMode = .scaleToFill
-        $0.layer.cornerRadius = 6
+        $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         return $0
     }(UIImageView())
@@ -40,5 +39,4 @@ class CustomPhotosCollectionViewCell: UICollectionViewCell {
             image.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
     }
-     
 }
