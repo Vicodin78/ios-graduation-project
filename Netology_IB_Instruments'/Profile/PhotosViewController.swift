@@ -31,7 +31,10 @@ class PhotosViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemGray6
         layout()
+        navigationController?.navigationBar.isHidden = false
+        title = "Photo Gallery"
     }
     
     private func layout() {

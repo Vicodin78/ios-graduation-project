@@ -30,6 +30,11 @@ class ProfileViewController: UIViewController {
         layout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     private func layout() {
         headerView.backgroundColor = .systemGray4
         
@@ -75,7 +80,10 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let photosViewController = PhotosViewController()
-        present(photosViewController, animated: true)
+        
+        let photosVC = PhotosViewController()
+//        let navPhotosVC = UINavigationController(rootViewController: photosVC)
+        navigationController?.pushViewController(photosVC, animated: true)
+
     }
 }

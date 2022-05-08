@@ -76,11 +76,12 @@ class LogInViewController: UIViewController {
     }(UIButton())
     
     @objc private func activeLogIn() {
-        profileVC.modalPresentationStyle = .fullScreen //дорога в один конец
-        present(profileVC, animated: true)
+        navProfileVC.modalPresentationStyle = .fullScreen //дорога в один конец
+        present(navProfileVC, animated: true)
     }
     
     private let profileVC = ProfileViewController()
+    private lazy var navProfileVC = UINavigationController(rootViewController: profileVC)
     
     private let scrollView: UIScrollView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
