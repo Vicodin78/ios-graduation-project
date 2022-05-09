@@ -28,7 +28,6 @@ class TabBarViewController: UITabBarController {
         logInViewController.tabBarItem.title = "Профиль"
         logInViewController.navigationItem.title = "ProfileView"
         logInViewController.tabBarItem.image = UIImage(systemName: "person.fill")
-        secondVC.navigationBar.isHidden = true
         
         viewControllers = [firstVC, secondVC]
     }

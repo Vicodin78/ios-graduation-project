@@ -76,12 +76,9 @@ class LogInViewController: UIViewController {
     }(UIButton())
     
     @objc private func activeLogIn() {
-        navProfileVC.modalPresentationStyle = .fullScreen //дорога в один конец
-        present(navProfileVC, animated: true)
+        let profileVC = ProfileViewController()
+        navigationController?.pushViewController(profileVC, animated: true)
     }
-    
-    private let profileVC = ProfileViewController()
-    private lazy var navProfileVC = UINavigationController(rootViewController: profileVC)
     
     private let scrollView: UIScrollView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -102,6 +99,7 @@ class LogInViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         notifCenter.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         notifCenter.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardDidHideNotification, object: nil)
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {

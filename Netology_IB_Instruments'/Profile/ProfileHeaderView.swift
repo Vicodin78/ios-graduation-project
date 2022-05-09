@@ -85,22 +85,9 @@ class ProfileHeaderView: UIView {
         return textField
     }()
     
-    private let someButton: UIButton = {
-        let someButton = UIButton()
-        someButton.translatesAutoresizingMaskIntoConstraints = false
-        someButton.backgroundColor = .systemMint
-        someButton.layer.cornerRadius = 14
-        someButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        someButton.layer.shadowRadius = 4
-        someButton.layer.borderColor = UIColor.black.cgColor
-        someButton.layer.shadowOpacity = 0.7
-        someButton.setTitle("Some Button", for: .normal)
-        return someButton
-    }()
-    
     private func layout() {
         
-        [myView, avatarImageView, titleLabel, secondTitle, buttonAct, textField, someButton].forEach{addSubview($0)}
+        [myView, avatarImageView, titleLabel, secondTitle, buttonAct, textField].forEach{addSubview($0)}
         
         NSLayoutConstraint.activate([
         
@@ -122,17 +109,12 @@ class ProfileHeaderView: UIView {
             buttonAct.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             buttonAct.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             buttonAct.heightAnchor.constraint(equalToConstant: 50),
+            buttonAct.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
         
             textField.topAnchor.constraint(equalTo: secondTitle.bottomAnchor, constant: 12),
             textField.leadingAnchor.constraint(equalTo: secondTitle.leadingAnchor, constant: -3),
             textField.heightAnchor.constraint(equalToConstant: 40),
-            textField.trailingAnchor.constraint(equalTo: buttonAct.trailingAnchor),
-        
-            someButton.topAnchor.constraint(equalTo: buttonAct.bottomAnchor, constant: 10),
-            someButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            someButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            someButton.heightAnchor.constraint(equalToConstant: 40),
-            someButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+            textField.trailingAnchor.constraint(equalTo: buttonAct.trailingAnchor)
         ])
     }
     
