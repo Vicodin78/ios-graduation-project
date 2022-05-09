@@ -66,7 +66,7 @@ class PhotosTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
         
-            backGrView.heightAnchor.constraint(equalToConstant: contentView.bounds.height + heightCoolection + insert), //insert - самый нижний отступ
+            backGrView.heightAnchor.constraint(equalToConstant: contentView.bounds.height + heightCoolection + insert * 1.2), //insert - самый нижний отступ
             
             backGrView.topAnchor.constraint(equalTo: contentView.topAnchor),
             backGrView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
