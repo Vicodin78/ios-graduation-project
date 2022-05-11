@@ -38,9 +38,11 @@ class PhotosTableViewCell: UITableViewCell {
     
     private lazy var profileCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.showsHorizontalScrollIndicator = false
         collection.dataSource = self
         collection.delegate = self
         collection.register(CustomPhotosCollectionViewCell.self, forCellWithReuseIdentifier: CustomPhotosCollectionViewCell.identifier)
@@ -62,7 +64,7 @@ class PhotosTableViewCell: UITableViewCell {
         
         let insert: CGFloat = 12
         
-        let heightCoolection: CGFloat = (((UIScreen.main.bounds.width - insert) / CGFloat(photosModel.count)) / 4 * 3) // соотношение сторон ячейки коллекции
+        let heightCoolection: CGFloat = (((UIScreen.main.bounds.width - insert) / 4) / 4 * 3) // соотношение сторон ячейки коллекции
         
         NSLayoutConstraint.activate([
         
@@ -91,7 +93,7 @@ class PhotosTableViewCell: UITableViewCell {
     
     private let photosModel: [UIImageView] = {
         var arrey = [UIImageView]()
-        for i in 10...13 {
+        for i in 10...29 {
             arrey.append(UIImageView(image: UIImage(named: "img\(i)")))
         }
         return arrey
@@ -120,7 +122,7 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = (collectionView.bounds.width - (sideInset * CGFloat(photosModel.count - 1))) / CGFloat(photosModel.count)
+        let width = (collectionView.bounds.width - (sideInset * 3)) / 4
         let height = (width / 4) * 3 // соотношение сторон ячейки коллекции
         
         return CGSize(width: width, height: height)
