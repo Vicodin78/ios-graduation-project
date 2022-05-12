@@ -7,11 +7,18 @@
 
 import UIKit
 
+protocol ProfileHeaderViewDelegate: AnyObject {
+    func profileDelegateFunc()
+}
+
 class ProfileHeaderView: UIView {
+    
+    weak var delegate: ProfileHeaderViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
+        tapGestures()
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +33,7 @@ class ProfileHeaderView: UIView {
         return myView
     }()
     
-    private let avatarImageView: UIImageView = {
+    let avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.image = UIImage(named: "panda")
@@ -85,16 +92,41 @@ class ProfileHeaderView: UIView {
         return textField
     }()
     
-    private func layout() {
+    private func tapGestures() {
+        let tapGest = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        avatarImageView.addGestureRecognizer(tapGest)
+        avatarImageView.isUserInteractionEnabled = true
+    }
+    
+    @objc private func tapAction() {
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20 + insetForAvatarImageView + widthHeightAvatarImageView),
+            buttonAct.topAnchor.constraint(equalTo: topAnchor, constant: 36 + insetForAvatarImageView + widthHeightAvatarImageView)
+        ])
+        layoutIfNeeded()
+        self.delegate?.profileDelegateFunc()
+    }
+    
+    private let insetForAvatarImageView: CGFloat = 16
+    private let widthHeightAvatarImageView: CGFloat = 100
+    
+    func layout() {
         
-        [myView, avatarImageView, titleLabel, secondTitle, buttonAct, textField].forEach{addSubview($0)}
+        [titleLabel, secondTitle, buttonAct, textField, myView, avatarImageView].forEach{addSubview($0)}
+        
+        
         
         NSLayoutConstraint.activate([
-        
-            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            avatarImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: insetForAvatarImageView),
+            avatarImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: insetForAvatarImageView),
+            avatarImageView.widthAnchor.constraint(equalToConstant: widthHeightAvatarImageView),
+            avatarImageView.heightAnchor.constraint(equalToConstant: widthHeightAvatarImageView),
+            
+            myView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            myView.topAnchor.constraint(equalTo: topAnchor),
+            myView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            myView.bottomAnchor.constraint(equalTo: bottomAnchor),
         
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             titleLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 20),
