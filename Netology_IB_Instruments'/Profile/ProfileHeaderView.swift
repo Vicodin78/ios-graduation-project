@@ -114,8 +114,6 @@ class ProfileHeaderView: UIView {
         
         [titleLabel, secondTitle, buttonAct, textField, myView, avatarImageView].forEach{addSubview($0)}
         
-        
-        
         NSLayoutConstraint.activate([
             
             avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: insetForAvatarImageView),
