@@ -20,7 +20,7 @@ class PostViewController: UIViewController {
         if let post = post {
             title = post.title
         }
-        view.backgroundColor = .brown
+        view.backgroundColor = .systemMint
         makeBarButton()
     }
     

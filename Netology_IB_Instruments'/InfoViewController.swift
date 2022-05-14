@@ -20,6 +20,7 @@ class InfoViewController: UIViewController {
         let alertButton = UIButton(frame: CGRect(x: 0, y: 0, width: 250, height: 50))
         alertButton.center = view.center
         alertButton.setTitle("Сжечь телефон", for: .normal)
+        alertButton.layer.cornerRadius = 5
         alertButton.backgroundColor = .systemRed
         alertButton.addTarget(self, action: #selector(alertAction), for: .touchUpInside)
         view.addSubview(alertButton)

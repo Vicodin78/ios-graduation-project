@@ -78,7 +78,7 @@ class PhotosTableViewCell: UITableViewCell {
             photosLabel.topAnchor.constraint(equalTo: backGrView.topAnchor, constant: insert),
             photosLabel.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor, constant: insert),
             photosLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2 - insert),
-            
+
             imgPhotosLab.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor, constant: -insert),
             imgPhotosLab.centerYAnchor.constraint(equalTo: photosLabel.centerYAnchor),
             imgPhotosLab.heightAnchor.constraint(equalTo: photosLabel.heightAnchor),
@@ -87,7 +87,7 @@ class PhotosTableViewCell: UITableViewCell {
             profileCollectionView.topAnchor.constraint(equalTo: photosLabel.bottomAnchor, constant: insert),
             profileCollectionView.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor, constant: insert),
             profileCollectionView.bottomAnchor.constraint(equalTo: backGrView.bottomAnchor, constant: -insert),
-            profileCollectionView.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor, constant: -insert),
+            profileCollectionView.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor, constant: -insert)
         ])
     }
     
