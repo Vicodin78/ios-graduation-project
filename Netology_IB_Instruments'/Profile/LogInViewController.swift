@@ -11,6 +11,8 @@ class LogInViewController: UIViewController {
     
     private let notifCenter = NotificationCenter.default
     
+    private let arrayOfAccounts: [String: String] = ["Ivan": "6021023", "ivan@mail.ru": "12345678"]
+    
     private let logoImg: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.image = UIImage(named: "logo")
@@ -75,22 +77,76 @@ class LogInViewController: UIViewController {
         return $0
     }(UIButton())
     
-    @objc private func activeLogIn() {
-        if loginTextField.text == "" || passTextField.text == "" {
-            let loginBounds = loginTextField.bounds
-            let passBounds = passTextField.bounds
-            UIView.animate(withDuration: 0.2) {
-                self.stackLogIn.layer.borderWidth = 1
-                self.stackLogIn.layer.borderColor = UIColor.red.cgColor
+    private let shortPassword: UILabel = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.text = "Password must contain 6 or more characters!"
+        $0.textAlignment = .center
+        $0.textColor = .red
+        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.alpha = 0.0
+        return $0
+    }(UILabel())
+    
+    private func redBorderForTextField() {
+        UIView.animate(withDuration: 0.2) {
+            self.stackLogIn.layer.borderWidth = 1
+            self.stackLogIn.layer.borderColor = UIColor.red.cgColor
+        }
+    }
+    
+    private func errorPassTextField() {
+        let passBounds = passTextField.bounds
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6, options: .curveEaseInOut) {
+            self.passTextField.bounds = CGRect(x: passBounds.origin.x + 15, y: passBounds.origin.y, width: passBounds.width, height: passBounds.height)
+        }
+    }
+    
+    private func verification() -> Bool {
+        var returnValue = Bool()
+        for i in arrayOfAccounts {
+            if loginTextField.text == i.key && passTextField.text == i.value {
+                returnValue = true
             }
+        }
+        return returnValue
+    }
+    
+    private func incorrectLoginPass() {
+        let alertWindow = UIAlertController(title: "Неверные данные!", message: "Пожалуйста проверьте правильность введенных вами данных.", preferredStyle: .alert)
+        let alertButton = UIAlertAction(title: "OK", style: .default)
+        alertWindow.addAction(alertButton)
+        present(alertWindow, animated: true)
+    }
+    
+    @objc private func activeLogIn() {
+        if passTextField.text == "" {
+            redBorderForTextField()
+            errorPassTextField()
+            passTextField.becomeFirstResponder()
+        }
+        if passTextField.text != "" && passTextField.text?.count ?? 0 < 6 {
+            redBorderForTextField()
+            UIView.animate(withDuration: 0.2) {
+                self.shortPassword.alpha = 1.0
+            } completion: { _ in
+                self.errorPassTextField()
+            }
+        }
+        if loginTextField.text == "" {
+            redBorderForTextField()
+            let loginBounds = loginTextField.bounds
             UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6, options: .curveEaseInOut) {
                 self.loginTextField.bounds = CGRect(x: loginBounds.origin.x + 15, y: loginBounds.origin.y, width: loginBounds.width, height: loginBounds.height)
-                self.passTextField.bounds = CGRect(x: passBounds.origin.x + 15, y: passBounds.origin.y, width: passBounds.width, height: passBounds.height)
             }
-            self.view.layoutIfNeeded()
+            loginTextField.becomeFirstResponder()
+        }
+        if verification() {
+            let profileVC = ProfileViewController()
+            navigationController?.pushViewController(profileVC, animated: true)
         } else {
-        let profileVC = ProfileViewController()
-        navigationController?.pushViewController(profileVC, animated: true)
+            if loginTextField.text != "" && passTextField.text?.count ?? 0 >= 6 {
+                incorrectLoginPass()
+            }
         }
     }
     
@@ -128,6 +184,7 @@ class LogInViewController: UIViewController {
             UIView.animate(withDuration: 0.2) {
                 self.stackLogIn.layer.borderWidth = 0.5
                 self.stackLogIn.layer.borderColor = UIColor.lightGray.cgColor
+                self.shortPassword.alpha = 0.0
             }
         }
     }
@@ -163,7 +220,7 @@ class LogInViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-        [logoImg, stackLogIn, buttonLogIn].forEach { contentView.addSubview($0) }
+        [logoImg, stackLogIn, shortPassword, buttonLogIn].forEach { contentView.addSubview($0) }
         
         [loginTextField, lineBetweenTextFields, passTextField].forEach { stackLogIn.addArrangedSubview($0)}
         
@@ -192,6 +249,10 @@ class LogInViewController: UIViewController {
             loginTextField.heightAnchor.constraint(equalToConstant: 50),
             passTextField.heightAnchor.constraint(equalToConstant: 50),
             lineBetweenTextFields.heightAnchor.constraint(equalToConstant: 0.5),
+            
+            shortPassword.leadingAnchor.constraint(equalTo: stackLogIn.leadingAnchor),
+            shortPassword.trailingAnchor.constraint(equalTo: stackLogIn.trailingAnchor),
+            shortPassword.topAnchor.constraint(equalTo: stackLogIn.bottomAnchor, constant: 2),
             
             buttonLogIn.topAnchor.constraint(equalTo: stackLogIn.bottomAnchor, constant: 16),
             buttonLogIn.leadingAnchor.constraint(equalTo: stackLogIn.leadingAnchor),
