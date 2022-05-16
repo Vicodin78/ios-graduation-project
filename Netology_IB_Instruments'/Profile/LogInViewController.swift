@@ -76,9 +76,33 @@ class LogInViewController: UIViewController {
     }(UIButton())
     
     @objc private func activeLogIn() {
+        if loginTextField.text == "" || passTextField.text == "" {
+            let loginBounds = loginTextField.bounds
+            let passBounds = passTextField.bounds
+            UIView.animate(withDuration: 0.2) {
+                self.stackLogIn.layer.borderWidth = 1
+                self.stackLogIn.layer.borderColor = UIColor.red.cgColor
+            }
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6, options: .curveEaseInOut) {
+                self.loginTextField.bounds = CGRect(x: loginBounds.origin.x + 15, y: loginBounds.origin.y, width: loginBounds.width, height: loginBounds.height)
+                self.passTextField.bounds = CGRect(x: passBounds.origin.x + 15, y: passBounds.origin.y, width: passBounds.width, height: passBounds.height)
+            }
+            self.view.layoutIfNeeded()
+        } else {
         let profileVC = ProfileViewController()
         navigationController?.pushViewController(profileVC, animated: true)
+        }
     }
+    
+    private func tapGesturesForView() {
+        let tapGest = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        view.addGestureRecognizer(tapGest)
+    }
+    
+    @objc private func tapAction() {
+        view.endEditing(true)
+    }
+    
     
     private let scrollView: UIScrollView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -94,6 +118,18 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         customLogInView()
+        tapGesturesForView()
+        self.loginTextField.addTarget(self, action: #selector(textFieldChangedCheck), for: .editingChanged)
+        self.passTextField.addTarget(self, action: #selector(textFieldChangedCheck), for: .editingChanged)
+    }
+    
+    @objc private func textFieldChangedCheck(sender: UITextField) {
+        if sender.text != "" {
+            UIView.animate(withDuration: 0.2) {
+                self.stackLogIn.layer.borderWidth = 0.5
+                self.stackLogIn.layer.borderColor = UIColor.lightGray.cgColor
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,8 +151,10 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func keyboardHide(notification: NSNotification) {
-        scrollView.contentInset = .zero
-        scrollView.verticalScrollIndicatorInsets = .zero
+        UIView.animate(withDuration: 0.5) {
+            self.scrollView.contentInset = .zero
+            self.scrollView.verticalScrollIndicatorInsets = .zero
+        }
     }
     
     private func customLogInView() {
@@ -168,7 +206,8 @@ class LogInViewController: UIViewController {
 
 extension LogInViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
+//        view.endEditing(true)
+        passTextField.becomeFirstResponder()
         return true
     }
 }
