@@ -14,15 +14,6 @@ class ProfileHeaderView: UIView {
         layout()
         tapGestures()
         tapGesturesExit()
-        self.textField.addTarget(self, action: #selector(textFieldChangedCheck), for: .editingChanged)
-    }
-    
-    @objc private func textFieldChangedCheck(sender: UITextField) {
-        if sender.text != "" {
-            UIView.animate(withDuration: 0.2) {
-                self.textField.layer.borderColor = UIColor.black.cgColor
-            }
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -229,6 +220,11 @@ class ProfileHeaderView: UIView {
     }
     
     @objc private func statusTextChanged(_ textField: UITextField) {
+        if textField.text != "" {
+            UIView.animate(withDuration: 0.2) {
+                self.textField.layer.borderColor = UIColor.black.cgColor
+            }
+        }
         statusText = textField.text
     }
 }
