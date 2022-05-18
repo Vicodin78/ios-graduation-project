@@ -9,13 +9,20 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-//    private let controller = ProfileViewController()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
         tapGestures()
         tapGesturesExit()
+        self.textField.addTarget(self, action: #selector(textFieldChangedCheck), for: .editingChanged)
+    }
+    
+    @objc private func textFieldChangedCheck(sender: UITextField) {
+        if sender.text != "" {
+            UIView.animate(withDuration: 0.2) {
+                self.textField.layer.borderColor = UIColor.black.cgColor
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -81,6 +88,7 @@ class ProfileHeaderView: UIView {
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.leftViewMode = .always
         textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        textField.delegate = self
         return textField
     }()
         
@@ -153,7 +161,7 @@ class ProfileHeaderView: UIView {
     private let insetForAvatarImageView: CGFloat = 16
     private let widthHeightAvatarImageView: CGFloat = 100
     
-    func layout() {
+    private func layout() {
         
         viewForPresent.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         
@@ -203,10 +211,31 @@ class ProfileHeaderView: UIView {
     }
     
     @objc private func buttonPressed() {
-        secondTitle.text = statusText
+        if textField.text != "" {
+            secondTitle.text = statusText
+            textField.text = ""
+            endEditing(true)
+        } else {
+            let statusBounds = textField.bounds
+            UIView.animate(withDuration: 0.2) {
+                self.textField.layer.borderColor = UIColor.red.cgColor
+            }
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6, options: .curveEaseInOut) {
+                self.textField.bounds = CGRect(x: statusBounds.origin.x + 15, y: statusBounds.origin.y, width: statusBounds.width, height: statusBounds.height)
+            }
+            textField.becomeFirstResponder()
+        }
+        
     }
     
     @objc private func statusTextChanged(_ textField: UITextField) {
         statusText = textField.text
+    }
+}
+
+extension ProfileHeaderView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        buttonPressed()
+        return true
     }
 }

@@ -267,7 +267,6 @@ class LogInViewController: UIViewController {
 
 extension LogInViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        view.endEditing(true)
         passTextField.becomeFirstResponder()
         return true
     }
