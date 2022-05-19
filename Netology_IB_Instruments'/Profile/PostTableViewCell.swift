@@ -8,20 +8,38 @@
 import UIKit
 
 protocol CustomCellDelegate: AnyObject {
-    func likeButtonClicked(cell: PostTableViewCell)
+    func likeClicked(cell: PostTableViewCell)
+    func viewsPresent(cell: PostTableViewCell)
 }
 
 class PostTableViewCell: UITableViewCell {
     
     weak var delegate: CustomCellDelegate?
     
-    private let backGrView: UIView = {
+    private let backView: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .black
+        $0.alpha = 0.0
+        return $0
+    }(UIView())
+    
+    private let exitFullScreenPost: UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isUserInteractionEnabled = true
+        $0.image = UIImage(systemName: "multiply")
+        $0.contentMode = .scaleAspectFit
+        $0.alpha = 0.0
+        $0.tintColor = .systemGray2
+        return $0
+    }(UIImageView())
+    
+    let backGrView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .white
         return $0
     }(UIView())
 
-    private let authorLabel: UILabel = {
+    let authorLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         $0.textColor = .black
@@ -29,19 +47,20 @@ class PostTableViewCell: UITableViewCell {
         return $0
     }(UILabel())
     
-    private let descriptionLabel: UILabel = {
+    let descriptionLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.numberOfLines = 0
+        $0.numberOfLines = 3
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textColor = .systemGray
         $0.textAlignment = .justified
         return $0
     }(UILabel())
     
-    private let imageViewPost: UIImageView = {
+    let imageViewPost: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .black
         $0.contentMode = .scaleAspectFit
+        $0.isUserInteractionEnabled = true
         return $0
     }(UIImageView())
     
@@ -53,12 +72,11 @@ class PostTableViewCell: UITableViewCell {
         return $0
     }(UILabel())
     
-    private let viewsLabel: UILabel = {
+    let viewsLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .black
         $0.textAlignment = .right
-        $0.isUserInteractionEnabled = true
         return $0
     }(UILabel())
     
@@ -66,6 +84,7 @@ class PostTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
         tapActionForLikes()
+        tapActionForViews()
     }
     
     required init?(coder: NSCoder) {
@@ -78,8 +97,16 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @objc private func tapAction() {
-        delegate?.likeButtonClicked(cell: self)
-        
+        delegate?.likeClicked(cell: self)
+    }
+    
+    private func tapActionForViews() {
+        let tapGest = UITapGestureRecognizer(target: self, action: #selector(tapActionViews))
+        imageViewPost.addGestureRecognizer(tapGest)
+    }
+    
+    @objc private func tapActionViews() {
+        delegate?.viewsPresent(cell: self)
     }
     
     func setupCell(_ model: PostModel) {
@@ -90,7 +117,7 @@ class PostTableViewCell: UITableViewCell {
         viewsLabel.text = "Views: \(model.views)"
     }
     
-    private func layout() {
+    func layout() {
         [backGrView, authorLabel, descriptionLabel, imageViewPost, likesLabel, viewsLabel].forEach { contentView.addSubview($0)}
         
         let insert: CGFloat = 16
