@@ -119,6 +119,9 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func activeLogIn() {
+        let profileVC = ProfileViewController()
+        navigationController?.pushViewController(profileVC, animated: true)
+        
         if passTextField.text == "" {
             redBorderForTextField()
             errorPassTextField()

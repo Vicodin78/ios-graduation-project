@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol CustomCellDelegate: AnyObject {
+    func likeButtonClicked(cell: PostTableViewCell)
+}
+
 class PostTableViewCell: UITableViewCell {
+    
+    weak var delegate: CustomCellDelegate?
     
     private let backGrView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -39,10 +45,11 @@ class PostTableViewCell: UITableViewCell {
         return $0
     }(UIImageView())
     
-    private let likesLabel: UILabel = {
+    let likesLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .black
+        $0.isUserInteractionEnabled = true
         return $0
     }(UILabel())
     
@@ -51,16 +58,28 @@ class PostTableViewCell: UITableViewCell {
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .black
         $0.textAlignment = .right
+        $0.isUserInteractionEnabled = true
         return $0
     }(UILabel())
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
+        tapActionForLikes()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func tapActionForLikes() {
+        let tapGest = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        likesLabel.addGestureRecognizer(tapGest)
+    }
+    
+    @objc private func tapAction() {
+        delegate?.likeButtonClicked(cell: self)
+        
     }
     
     func setupCell(_ model: PostModel) {

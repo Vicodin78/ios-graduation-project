@@ -22,7 +22,16 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
-    private let postModel = PostModel.makePost()
+    private var postModel: [PostModel] = {
+        let textPost = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        var post = [PostModel]()
+        post.append(PostModel(author: "Ivan", description: textPost, image: "img1", likes: 0, views: 0))
+        post.append(PostModel(author: "Nikolay", description: textPost, image: "img2", likes: 0, views: 0))
+        post.append(PostModel(author: "Evgeniy", description: textPost, image: "img3", likes: 0, views: 0))
+        post.append(PostModel(author: "Anastasia", description: textPost, image: "img4", likes: 0, views: 0))
+        post.append(PostModel(author: "Olga", description: textPost, image: "img5", likes: 0, views: 0))
+        return post
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +76,8 @@ extension ProfileViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
         cell.setupCell(postModel[indexPath.row])
+        cell.delegate = self
+        cell.tag = indexPath.row
         
         return indexPath.section == 0 ? firstCell : cell
     }
@@ -80,7 +91,6 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if indexPath.section == 0 {
             let photosVC = PhotosViewController()
             navigationController?.pushViewController(photosVC, animated: true)
@@ -88,9 +98,29 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - PhotosTabCellDelegate
+
 extension ProfileViewController: PhotosTabCellDelegate {
     func delegateFunc() {
         let photosVC = PhotosViewController()
         navigationController?.pushViewController(photosVC, animated: true)
+    }
+}
+
+// MARK: - CustomCellDelegate
+
+extension ProfileViewController: CustomCellDelegate {
+    func likeButtonClicked(cell: PostTableViewCell) {
+        if self.tableView.indexPath(for: cell) != nil {
+            let like = cell.likesLabel.text
+            var newStr = [String]()
+            if let like = like {
+                newStr = like.components(separatedBy: " ")
+            }
+            var number = NSString(string: newStr[1]).intValue
+            number += 1
+            cell.likesLabel.text = "Likes: \(number)"
+            postModel[cell.tag].likes = Int(number) //Что бы при пролистывании ленты и выгрузки ячейки из памяти, счетчик не обнулялся.
+        }
     }
 }
