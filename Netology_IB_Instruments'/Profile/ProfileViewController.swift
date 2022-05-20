@@ -9,7 +9,9 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private lazy var headerView = ProfileHeaderView()
+    var indexNumber = Int()
+    
+    private let headerView = ProfileHeaderView()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -33,48 +35,10 @@ class ProfileViewController: UIViewController {
         return post
     }()
     
-//    private let backView: UIView = {
-//        $0.translatesAutoresizingMaskIntoConstraints = false
-//        $0.backgroundColor = .black
-//        $0.alpha = 0.0
-//        return $0
-//    }(UIView())
-//    
-//    private let exitFullScreenPost: UIImageView = {
-//        $0.translatesAutoresizingMaskIntoConstraints = false
-//        $0.isUserInteractionEnabled = true
-//        $0.image = UIImage(systemName: "multiply")
-//        $0.contentMode = .scaleAspectFit
-//        $0.alpha = 0.0
-//        $0.tintColor = .systemGray2
-//        return $0
-//    }(UIImageView())
-    
-//    private func tapGesturesFullScreenPost() {
-//        let tapGest = UITapGestureRecognizer(target: self, action: #selector(tapAction))
-//        exitFullScreenPost.addGestureRecognizer(tapGest)
-//    }
-//
-//    @objc private func tapAction() {
-//        UIView.animate(withDuration: 0.4) {
-////            cell.imageViewPost.removeFromSuperview()
-//            self.backView.alpha = 0.0
-//            self.exitFullScreenPost.alpha = 0.0
-//            NSLayoutConstraint.deactivate(self.constraints)
-//            NSLayoutConstraint.activate(self.exitConstraints)
-////            cell.contentView.addSubview(cell.imageViewPost)
-////            cell.contentView.addSubview(cell.descriptionLabel)
-//
-//            self.layout()
-//            self.view.layoutIfNeeded()
-//        }
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         layout()
-//        tapGesturesFullScreenPost()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,9 +47,6 @@ class ProfileViewController: UIViewController {
     }
     
     private func layout() {
-//        headerView.backgroundColor = .systemGray6
-        
-//        [tableView, backView, exitFullScreenPost].forEach {view.addSubview($0)}
         [tableView].forEach {view.addSubview($0)}
         
         NSLayoutConstraint.activate([
@@ -94,60 +55,8 @@ class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-//            backView.topAnchor.constraint(equalTo: view.topAnchor),
-//            backView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            backView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            backView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
         ])
     }
-    
-//    private var constraints = [NSLayoutConstraint]()
-//    private var exitConstraints = [NSLayoutConstraint]()
-//
-//    private func presentForPost(cell: PostTableViewCell) {
-//        let image = cell.imageViewPost
-//        let description = cell.descriptionLabel
-//
-//        let insert: CGFloat = 16
-//        let widthHeight: CGFloat = UIScreen.main.bounds.width
-//
-//        exitConstraints = [cell.imageViewPost.topAnchor.constraint(equalTo: cell.authorLabel.bottomAnchor, constant: insert),
-//                           cell.imageViewPost.widthAnchor.constraint(equalToConstant: widthHeight),
-//                           cell.imageViewPost.heightAnchor.constraint(equalToConstant: widthHeight),
-//                           cell.imageViewPost.leadingAnchor.constraint(equalTo: cell.backGrView.leadingAnchor),
-//                           cell.imageViewPost.trailingAnchor.constraint(equalTo: cell.backGrView.trailingAnchor),
-//
-//                           cell.descriptionLabel.topAnchor.constraint(equalTo: cell.imageViewPost.bottomAnchor, constant: insert),
-//                           cell.descriptionLabel.leadingAnchor.constraint(equalTo: cell.backGrView.leadingAnchor, constant: insert),
-//                           cell.descriptionLabel.trailingAnchor.constraint(equalTo: cell.backGrView.trailingAnchor, constant: -insert),]
-//
-//        UIView.animate(withDuration: 0.4) {
-//            self.view.addSubview(cell.imageViewPost)
-//            self.view.addSubview(description)
-//            self.view.layoutIfNeeded()
-//
-//            self.backView.alpha = 0.85
-////            description.numberOfLines = 10
-//            description.textColor = .systemGray5
-//            self.exitFullScreenPost.alpha = 1.0
-//
-//            self.constraints = [image.topAnchor.constraint(equalTo: self.view.topAnchor, constant: (UIScreen.main.bounds.height - image.bounds.height)/4),
-//
-//            description.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 20),
-//            description.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-//            description.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),]
-//
-//            NSLayoutConstraint.activate(self.constraints)
-//
-//            NSLayoutConstraint.activate([
-//                self.exitFullScreenPost.heightAnchor.constraint(equalToConstant: 40),
-//                self.exitFullScreenPost.widthAnchor.constraint(equalToConstant: 40),
-//                self.exitFullScreenPost.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-//                self.exitFullScreenPost.bottomAnchor.constraint(equalTo: image.topAnchor, constant: -10)
-//            ])
-//        }
-//    }
 }
 
 // MARK: - UITableViewDataSource
@@ -187,6 +96,13 @@ extension ProfileViewController: UITableViewDelegate {
             let photosVC = PhotosViewController()
             navigationController?.pushViewController(photosVC, animated: true)
         }
+        if indexPath.section == 1 {
+            let presentPostVC = PresentPostViewController()
+            presentPostVC.imageViewPost.image = UIImage(named: postModel[indexPath.row].image)
+            presentPostVC.descriptionLabel.text = postModel[indexPath.row].description
+//            navigationController?.pushViewController(presentPostVC, animated: true)
+            present(presentPostVC, animated: true)
+        }
     }
 }
 
@@ -202,7 +118,6 @@ extension ProfileViewController: PhotosTabCellDelegate {
 // MARK: - CustomCellDelegate
 
 extension ProfileViewController: CustomCellDelegate {
-
     func likeClicked(cell: PostTableViewCell) {
         if self.tableView.indexPath(for: cell) != nil {
             let like = cell.likesLabel.text
@@ -217,7 +132,7 @@ extension ProfileViewController: CustomCellDelegate {
         }
     }
     func viewsPresent(cell: PostTableViewCell) {
-//        presentForPost(cell: cell)
+        tableView(tableView, didSelectRowAt: IndexPath(row: cell.tag, section: 1))
         if self.tableView.indexPath(for: cell) != nil {
             let view = cell.viewsLabel.text
             var newStr = [String]()

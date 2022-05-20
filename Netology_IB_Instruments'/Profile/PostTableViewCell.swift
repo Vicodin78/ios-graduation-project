@@ -16,23 +16,6 @@ class PostTableViewCell: UITableViewCell {
     
     weak var delegate: CustomCellDelegate?
     
-    private let backView: UIView = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .black
-        $0.alpha = 0.0
-        return $0
-    }(UIView())
-    
-    private let exitFullScreenPost: UIImageView = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.isUserInteractionEnabled = true
-        $0.image = UIImage(systemName: "multiply")
-        $0.contentMode = .scaleAspectFit
-        $0.alpha = 0.0
-        $0.tintColor = .systemGray2
-        return $0
-    }(UIImageView())
-    
     let backGrView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .white
@@ -118,42 +101,41 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func layout() {
-        [backGrView, authorLabel, descriptionLabel, imageViewPost, likesLabel, viewsLabel].forEach { contentView.addSubview($0)}
         
         let insert: CGFloat = 16
         let widthHeight: CGFloat = UIScreen.main.bounds.width
+        
+        [backGrView, authorLabel,  likesLabel, viewsLabel, imageViewPost, descriptionLabel].forEach { contentView.addSubview($0)}
         
         NSLayoutConstraint.activate([
             backGrView.topAnchor.constraint(equalTo: contentView.topAnchor),
             backGrView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             backGrView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             backGrView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
+
             authorLabel.topAnchor.constraint(equalTo: backGrView.topAnchor, constant: insert),
             authorLabel.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor, constant: insert),
             authorLabel.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor, constant: -insert),
-            
+
             imageViewPost.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: insert),
             imageViewPost.widthAnchor.constraint(equalToConstant: widthHeight),
             imageViewPost.heightAnchor.constraint(equalToConstant: widthHeight),
             imageViewPost.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor),
             imageViewPost.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor),
-            
+
             descriptionLabel.topAnchor.constraint(equalTo: imageViewPost.bottomAnchor, constant: insert),
             descriptionLabel.leadingAnchor.constraint(equalTo: backGrView.leadingAnchor, constant: insert),
             descriptionLabel.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor, constant: -insert),
-            
+
             likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: insert),
             likesLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
             likesLabel.bottomAnchor.constraint(equalTo: backGrView.bottomAnchor, constant: -insert),
             likesLabel.widthAnchor.constraint(equalToConstant: (widthHeight / 2) - insert),
-            
+
             viewsLabel.topAnchor.constraint(equalTo: likesLabel.topAnchor),
             viewsLabel.leadingAnchor.constraint(equalTo: likesLabel.trailingAnchor),
             viewsLabel.bottomAnchor.constraint(equalTo: likesLabel.bottomAnchor),
             viewsLabel.trailingAnchor.constraint(equalTo: backGrView.trailingAnchor, constant: -insert)
         ])
-        
     }
-
 }
