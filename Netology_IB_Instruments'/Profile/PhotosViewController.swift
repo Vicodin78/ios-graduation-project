@@ -78,4 +78,11 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         sideInset
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = FullScreenPhotosViewController()
+        vc.image.image = photosModel[indexPath.row].image
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true)
+    }
 }
