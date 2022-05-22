@@ -147,48 +147,41 @@ class LogInViewController: UIViewController {
             redBorderForTextField()
             errorPassTextField()
             passTextField.becomeFirstResponder()
-        }
-        if passTextField.text != "" && passTextField.text?.count ?? 0 < 6 {
-            redBorderForTextField()
-            UIView.animate(withDuration: 0.2) {
-                self.shortPassword.alpha = 1.0
-            } completion: { _ in
-                self.errorPassTextField()
+        } else {
+            if passTextField.text?.count ?? 0 < 6 {
+                redBorderForTextField()
+                UIView.animate(withDuration: 0.2) {
+                    self.shortPassword.alpha = 1.0
+                } completion: { _ in
+                    self.errorPassTextField()
+                }
             }
         }
         if loginTextField.text == "" {
             redBorderForTextField()
             errorLoginTextField()
             loginTextField.becomeFirstResponder()
-        }
-        if loginTextField.text != "" {
+        } else {
             if let login = loginTextField.text {
                 if isValidEmail(testStr: login) {
                     if verification() {
                         let profileVC = ProfileViewController()
                         navigationController?.pushViewController(profileVC, animated: true)
                     } else {
-                        if loginTextField.text != "" && passTextField.text?.count ?? 0 >= 6 {
+                        if passTextField.text?.count ?? 0 >= 6 {
                             incorrectLoginPass()
                         }
                     }
                 } else {
                     redBorderForTextField()
-                    errorLoginTextField()
-                    incorrectImail.alpha = 1.0
+                    UIView.animate(withDuration: 0.2) {
+                        self.incorrectImail.alpha = 1.0
+                    } completion: { _ in
+                        self.errorLoginTextField()
+                    }
                 }
             }
         }
-        
-        
-//        if verification() {
-//            let profileVC = ProfileViewController()
-//            navigationController?.pushViewController(profileVC, animated: true)
-//        } else {
-//            if loginTextField.text != "" && passTextField.text?.count ?? 0 >= 6 {
-//                incorrectLoginPass()
-//            }
-//        }
     }
     
     private func tapGesturesForView() {
@@ -312,7 +305,12 @@ class LogInViewController: UIViewController {
 
 extension LogInViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        passTextField.becomeFirstResponder()
+        if loginTextField.text != "" && passTextField.isFirstResponder {
+            activeLogIn()
+        }
+        if loginTextField.text != "" {
+            passTextField.becomeFirstResponder()
+        }
         return true
     }
 }
