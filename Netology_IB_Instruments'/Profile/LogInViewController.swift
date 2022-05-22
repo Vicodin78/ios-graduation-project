@@ -13,6 +13,17 @@ class LogInViewController: UIViewController {
     
     private let arrayOfAccounts: [String: String] = ["Ivan": "6021023", "ivan@mail.ru": "12345678"]
     
+    private let scrollView: UIScrollView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        return $0
+    }(UIScrollView())
+    
+    private let contentView: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .white
+        return $0
+    }(UIView())
+    
     private let logoImg: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.image = UIImage(named: "logo")
@@ -192,17 +203,6 @@ class LogInViewController: UIViewController {
     @objc private func tapAction() {
         view.endEditing(true)
     }
-    
-    private let scrollView: UIScrollView = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        return $0
-    }(UIScrollView())
-    
-    private let contentView: UIView = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .white
-        return $0
-    }(UIView())
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -16,13 +16,13 @@ class PostTableViewCell: UITableViewCell {
     
     weak var delegate: CustomCellDelegate?
     
-    let backGrView: UIView = {
+    private let backGrView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .white
         return $0
     }(UIView())
 
-    let authorLabel: UILabel = {
+    private let authorLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         $0.textColor = .black
@@ -30,7 +30,7 @@ class PostTableViewCell: UITableViewCell {
         return $0
     }(UILabel())
     
-    let descriptionLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.numberOfLines = 3
         $0.font = UIFont.systemFont(ofSize: 14)
@@ -39,9 +39,9 @@ class PostTableViewCell: UITableViewCell {
         return $0
     }(UILabel())
     
-    let imageViewPost: UIImageView = {
+    private let imageViewPost: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .black
+        $0.backgroundColor = .clear
         $0.contentMode = .scaleAspectFit
         $0.isUserInteractionEnabled = true
         return $0
@@ -100,7 +100,7 @@ class PostTableViewCell: UITableViewCell {
         viewsLabel.text = "Views: \(model.views)"
     }
     
-    func layout() {
+    private func layout() {
         
         let insert: CGFloat = 16
         let widthHeight: CGFloat = UIScreen.main.bounds.width

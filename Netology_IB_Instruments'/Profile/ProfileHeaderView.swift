@@ -22,7 +22,7 @@ class ProfileHeaderView: UIView {
     
     private var statusText: String?
     
-    let avatarImageView: UIImageView = {
+    private let avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.image = UIImage(named: "panda")
@@ -228,6 +228,8 @@ class ProfileHeaderView: UIView {
         statusText = textField.text
     }
 }
+
+// MARK: - UITextFieldDelegate
 
 extension ProfileHeaderView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

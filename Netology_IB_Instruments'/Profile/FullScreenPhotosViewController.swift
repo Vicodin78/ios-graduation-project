@@ -9,7 +9,7 @@ import UIKit
 
 class FullScreenPhotosViewController: UIViewController {
     
-    let backView: UIView = {
+    private let backView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .black
         $0.alpha = 0.7

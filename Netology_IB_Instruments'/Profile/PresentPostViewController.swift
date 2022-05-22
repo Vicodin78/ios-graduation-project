@@ -9,7 +9,7 @@ import UIKit
 
 class PresentPostViewController: UIViewController {
     
-    lazy var imageViewPost: UIImageView = {
+    let imageViewPost: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .black
         $0.contentMode = .scaleAspectFit
@@ -17,7 +17,7 @@ class PresentPostViewController: UIViewController {
         return $0
     }(UIImageView())
     
-    lazy var descriptionLabel: UILabel = {
+    let descriptionLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.numberOfLines = 15
         $0.font = UIFont.systemFont(ofSize: 14)
