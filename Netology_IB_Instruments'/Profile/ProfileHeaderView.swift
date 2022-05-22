@@ -12,6 +12,8 @@ class ProfileHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
+        tapGestures()
+        tapGesturesExit()
     }
     
     required init?(coder: NSCoder) {
@@ -19,12 +21,6 @@ class ProfileHeaderView: UIView {
     }
     
     private var statusText: String?
-    
-    private let myView: UIView = {
-        let myView = UIView()
-        myView.translatesAutoresizingMaskIntoConstraints = false
-        return myView
-    }()
     
     private let avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
@@ -35,6 +31,7 @@ class ProfileHeaderView: UIView {
         avatarImageView.layer.borderWidth = 3
         avatarImageView.layer.borderColor = UIColor.white.cgColor
         avatarImageView.clipsToBounds = true
+        avatarImageView.isUserInteractionEnabled = true
         return avatarImageView
     }()
     
@@ -82,66 +79,161 @@ class ProfileHeaderView: UIView {
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.leftViewMode = .always
         textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        textField.delegate = self
         return textField
     }()
+        
+    private let viewForPresent: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .black
+        $0.alpha = 0.0
+        return $0
+    }(UIView())
+
+    private let profileExitFullScreen: UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isUserInteractionEnabled = true
+        $0.image = UIImage(systemName: "multiply")
+        $0.contentMode = .scaleAspectFit
+        $0.alpha = 0.0
+        $0.tintColor = .systemGray6
+        return $0
+    }(UIImageView())
     
-    private let someButton: UIButton = {
-        let someButton = UIButton()
-        someButton.translatesAutoresizingMaskIntoConstraints = false
-        someButton.backgroundColor = .systemMint
-        someButton.layer.cornerRadius = 14
-        someButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        someButton.layer.shadowRadius = 4
-        someButton.layer.borderColor = UIColor.black.cgColor
-        someButton.layer.shadowOpacity = 0.7
-        someButton.setTitle("Some Button", for: .normal)
-        return someButton
-    }()
+    private func tapGestures() {
+        let tapGest = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        avatarImageView.addGestureRecognizer(tapGest)
+    }
+    
+    @objc private func tapAction() {
+        avatarImageView.layer.borderWidth = 0
+        UIView.animate(withDuration: 0.5) {
+            self.viewForPresent.alpha = 0.7
+            NSLayoutConstraint.deactivate(self.avatarConstreint)
+            self.avatarImageView.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+            NSLayoutConstraint.activate(self.avatarFullScrenConstraint)
+            self.avatarImageView.layer.cornerRadius = 0
+            self.avatarImageView.contentMode = .scaleAspectFit
+            self.avatarImageView.clipsToBounds = false
+            self.layoutIfNeeded()
+            self.updateFocusIfNeeded()
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3) {
+                self.profileExitFullScreen.alpha = 1.0
+            }
+        }
+    }
+    
+    private func tapGesturesExit() {
+        let tapGest = UITapGestureRecognizer(target: self, action: #selector(tapActionExit))
+        profileExitFullScreen.addGestureRecognizer(tapGest)
+    }
+
+    @objc private func tapActionExit() {
+        UIView.animate(withDuration: 0.3) {
+            self.profileExitFullScreen.alpha = 0.0
+        } completion: { _ in
+            UIView.animate(withDuration: 0.5) {
+                self.viewForPresent.alpha = 0.0
+                self.avatarImageView.layer.cornerRadius = 50
+                self.avatarImageView.layer.borderWidth = 3
+                self.avatarImageView.contentMode = .scaleAspectFill
+                self.avatarImageView.clipsToBounds = true
+                NSLayoutConstraint.activate(self.avatarConstreint)
+                NSLayoutConstraint.deactivate(self.avatarFullScrenConstraint)
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    private var avatarConstreint = [NSLayoutConstraint]()
+    private var avatarFullScrenConstraint = [NSLayoutConstraint]()
+    
+    private let insetForAvatarImageView: CGFloat = 16
+    private let widthHeightAvatarImageView: CGFloat = 100
     
     private func layout() {
         
-        [myView, avatarImageView, titleLabel, secondTitle, buttonAct, textField, someButton].forEach{addSubview($0)}
+        viewForPresent.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+        
+        avatarConstreint = [
+            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: insetForAvatarImageView),
+            avatarImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: insetForAvatarImageView),
+            avatarImageView.widthAnchor.constraint(equalToConstant: widthHeightAvatarImageView),
+            avatarImageView.heightAnchor.constraint(equalToConstant: widthHeightAvatarImageView)]
+        
+        avatarFullScrenConstraint = [
+            avatarImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.9),
+            avatarImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)]
+        
+        [titleLabel, secondTitle, buttonAct, textField, viewForPresent, avatarImageView, profileExitFullScreen].forEach{addSubview($0)}
+        
+        NSLayoutConstraint.activate(avatarConstreint)
         
         NSLayoutConstraint.activate([
         
-            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            avatarImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
-        
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            titleLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
+            titleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20 + insetForAvatarImageView + widthHeightAvatarImageView),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
 
             secondTitle.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             secondTitle.bottomAnchor.constraint(equalTo: buttonAct.topAnchor, constant: -64),
             secondTitle.trailingAnchor.constraint(equalTo: trailingAnchor),
         
-            buttonAct.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 36),
+            buttonAct.topAnchor.constraint(equalTo: topAnchor, constant: 36 + insetForAvatarImageView + widthHeightAvatarImageView),
             buttonAct.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             buttonAct.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             buttonAct.heightAnchor.constraint(equalToConstant: 50),
+            buttonAct.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
         
             textField.topAnchor.constraint(equalTo: secondTitle.bottomAnchor, constant: 12),
             textField.leadingAnchor.constraint(equalTo: secondTitle.leadingAnchor, constant: -3),
             textField.heightAnchor.constraint(equalToConstant: 40),
             textField.trailingAnchor.constraint(equalTo: buttonAct.trailingAnchor),
-        
-            someButton.topAnchor.constraint(equalTo: buttonAct.bottomAnchor, constant: 10),
-            someButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            someButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            someButton.heightAnchor.constraint(equalToConstant: 40),
-            someButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+            
+            viewForPresent.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
+            viewForPresent.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            
+            profileExitFullScreen.heightAnchor.constraint(equalToConstant: 40),
+            profileExitFullScreen.widthAnchor.constraint(equalToConstant: 40),
+            profileExitFullScreen.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            profileExitFullScreen.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
         ])
     }
     
-    
     @objc private func buttonPressed() {
-        secondTitle.text = statusText
+        if textField.text != "" {
+            secondTitle.text = statusText
+            textField.text = ""
+            endEditing(true)
+        } else {
+            let statusBounds = textField.bounds
+            UIView.animate(withDuration: 0.2) {
+                self.textField.layer.borderColor = UIColor.red.cgColor
+            }
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6, options: .curveEaseInOut) {
+                self.textField.bounds = CGRect(x: statusBounds.origin.x + 15, y: statusBounds.origin.y, width: statusBounds.width, height: statusBounds.height)
+            }
+            textField.becomeFirstResponder()
+        }
+        
     }
     
     @objc private func statusTextChanged(_ textField: UITextField) {
+        if textField.text != "" {
+            UIView.animate(withDuration: 0.2) {
+                self.textField.layer.borderColor = UIColor.black.cgColor
+            }
+        }
         statusText = textField.text
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension ProfileHeaderView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        buttonPressed()
+        return true
     }
 }

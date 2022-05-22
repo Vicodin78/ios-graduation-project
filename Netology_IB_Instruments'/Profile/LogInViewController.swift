@@ -11,6 +11,19 @@ class LogInViewController: UIViewController {
     
     private let notifCenter = NotificationCenter.default
     
+    private let arrayOfAccounts: [String: String] = ["Ivan": "6021023", "ivan@mail.ru": "12345678"]
+    
+    private let scrollView: UIScrollView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        return $0
+    }(UIScrollView())
+    
+    private let contentView: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .white
+        return $0
+    }(UIView())
+    
     private let logoImg: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.image = UIImage(named: "logo")
@@ -63,7 +76,6 @@ class LogInViewController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitle("Log In", for: .normal)
         $0.setTitleColor(.white, for: .normal)
-//        $0.backgroundColor = UIColor("#4885CC", alpha: 1)
         let imgNormal = UIImage(named: "blue_pixel")!.alpha(1.0)
         let imgOther = UIImage(named: "blue_pixel")!.alpha(0.8)
         $0.setBackgroundImage(imgNormal, for: .normal)
@@ -76,32 +88,145 @@ class LogInViewController: UIViewController {
         return $0
     }(UIButton())
     
-    @objc private func activeLogIn() {
-        profileVC.modalPresentationStyle = .fullScreen //дорога в один конец
-        present(profileVC, animated: true)
+    private let shortPassword: UILabel = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.text = "Password must contain 6 or more characters!"
+        $0.textAlignment = .center
+        $0.textColor = .red
+        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.alpha = 0.0
+        return $0
+    }(UILabel())
+    
+    private let incorrectImail: UILabel = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.text = "Invalid email format!"
+        $0.textAlignment = .center
+        $0.textColor = .red
+        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.alpha = 0.0
+        return $0
+    }(UILabel())
+    
+    private func redBorderForTextField() {
+        UIView.animate(withDuration: 0.2) {
+            self.stackLogIn.layer.borderWidth = 1
+            self.stackLogIn.layer.borderColor = UIColor.red.cgColor
+        }
     }
     
-    private let profileVC = ProfileViewController()
+    private func errorPassTextField() {
+        let passBounds = passTextField.bounds
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6, options: .curveEaseInOut) {
+            self.passTextField.bounds = CGRect(x: passBounds.origin.x + 15, y: passBounds.origin.y, width: passBounds.width, height: passBounds.height)
+        }
+    }
     
-    private let scrollView: UIScrollView = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        return $0
-    }(UIScrollView())
+    private func errorLoginTextField() {
+        let loginBounds = loginTextField.bounds
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6, options: .curveEaseInOut) {
+            self.loginTextField.bounds = CGRect(x: loginBounds.origin.x + 15, y: loginBounds.origin.y, width: loginBounds.width, height: loginBounds.height)
+        }
+    }
     
-    private let contentView: UIView = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .white
-        return $0
-    }(UIView())
+    private func verification() -> Bool {
+        var returnValue = Bool()
+        for i in arrayOfAccounts {
+            if loginTextField.text == i.key && passTextField.text == i.value {
+                returnValue = true
+            }
+        }
+        return returnValue
+    }
+    
+    private func isValidEmail(testStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
+    
+    private func incorrectLoginPass() {
+        let alertWindow = UIAlertController(title: "Неверные данные!", message: "Пожалуйста проверьте правильность введенных вами данных.", preferredStyle: .alert)
+        let alertButton = UIAlertAction(title: "OK", style: .default)
+        alertWindow.addAction(alertButton)
+        present(alertWindow, animated: true)
+    }
+    
+    @objc private func activeLogIn() {
+        if passTextField.text == "" {
+            redBorderForTextField()
+            errorPassTextField()
+            passTextField.becomeFirstResponder()
+        } else {
+            if passTextField.text?.count ?? 0 < 6 {
+                redBorderForTextField()
+                UIView.animate(withDuration: 0.2) {
+                    self.shortPassword.alpha = 1.0
+                } completion: { _ in
+                    self.errorPassTextField()
+                }
+            }
+        }
+        if loginTextField.text == "" {
+            redBorderForTextField()
+            errorLoginTextField()
+            loginTextField.becomeFirstResponder()
+        } else {
+            if let login = loginTextField.text {
+                if isValidEmail(testStr: login) {
+                    if verification() {
+                        let profileVC = ProfileViewController()
+                        navigationController?.pushViewController(profileVC, animated: true)
+                    } else {
+                        if passTextField.text?.count ?? 0 >= 6 {
+                            incorrectLoginPass()
+                        }
+                    }
+                } else {
+                    redBorderForTextField()
+                    UIView.animate(withDuration: 0.2) {
+                        self.incorrectImail.alpha = 1.0
+                    } completion: { _ in
+                        self.errorLoginTextField()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func tapGesturesForView() {
+        let tapGest = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        view.addGestureRecognizer(tapGest)
+    }
+    
+    @objc private func tapAction() {
+        view.endEditing(true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         customLogInView()
+        tapGesturesForView()
+        self.loginTextField.addTarget(self, action: #selector(textFieldChangedCheck), for: .editingChanged)
+        self.passTextField.addTarget(self, action: #selector(textFieldChangedCheck), for: .editingChanged)
+    }
+    
+    @objc private func textFieldChangedCheck(sender: UITextField) {
+        if sender.text != "" {
+            UIView.animate(withDuration: 0.2) {
+                self.stackLogIn.layer.borderWidth = 0.5
+                self.stackLogIn.layer.borderColor = UIColor.lightGray.cgColor
+                self.shortPassword.alpha = 0.0
+                self.incorrectImail.alpha = 0.0
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         notifCenter.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         notifCenter.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardDidHideNotification, object: nil)
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -117,8 +242,10 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func keyboardHide(notification: NSNotification) {
-        scrollView.contentInset = .zero
-        scrollView.verticalScrollIndicatorInsets = .zero
+        UIView.animate(withDuration: 0.5) {
+            self.scrollView.contentInset = .zero
+            self.scrollView.verticalScrollIndicatorInsets = .zero
+        }
     }
     
     private func customLogInView() {
@@ -127,7 +254,7 @@ class LogInViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-        [logoImg, stackLogIn, buttonLogIn].forEach { contentView.addSubview($0) }
+        [logoImg, stackLogIn, shortPassword, incorrectImail, buttonLogIn].forEach { contentView.addSubview($0) }
         
         [loginTextField, lineBetweenTextFields, passTextField].forEach { stackLogIn.addArrangedSubview($0)}
         
@@ -157,6 +284,14 @@ class LogInViewController: UIViewController {
             passTextField.heightAnchor.constraint(equalToConstant: 50),
             lineBetweenTextFields.heightAnchor.constraint(equalToConstant: 0.5),
             
+            shortPassword.leadingAnchor.constraint(equalTo: stackLogIn.leadingAnchor),
+            shortPassword.trailingAnchor.constraint(equalTo: stackLogIn.trailingAnchor),
+            shortPassword.topAnchor.constraint(equalTo: stackLogIn.bottomAnchor, constant: 2),
+            
+            incorrectImail.bottomAnchor.constraint(equalTo: stackLogIn.topAnchor, constant: -2),
+            incorrectImail.leadingAnchor.constraint(equalTo: stackLogIn.leadingAnchor),
+            incorrectImail.trailingAnchor.constraint(equalTo: stackLogIn.trailingAnchor),
+            
             buttonLogIn.topAnchor.constraint(equalTo: stackLogIn.bottomAnchor, constant: 16),
             buttonLogIn.leadingAnchor.constraint(equalTo: stackLogIn.leadingAnchor),
             buttonLogIn.trailingAnchor.constraint(equalTo: stackLogIn.trailingAnchor),
@@ -170,7 +305,12 @@ class LogInViewController: UIViewController {
 
 extension LogInViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
+        if loginTextField.text != "" && passTextField.isFirstResponder {
+            activeLogIn()
+        }
+        if loginTextField.text != "" {
+            passTextField.becomeFirstResponder()
+        }
         return true
     }
 }
