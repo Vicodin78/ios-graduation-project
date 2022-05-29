@@ -12,22 +12,14 @@ class FullScreenPhotosViewController: UIViewController {
     private let backView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .black
-        $0.alpha = 0.0
+        $0.alpha = 0.7
         return $0
     }(UIImageView())
-    
-    private let blurEffectView: UIVisualEffectView = {
-        let blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffect.Style.systemMaterialDark))
-        blur.alpha = 0.0
-        blur.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        return blur
-    }()
     
     let image: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFit
         $0.clipsToBounds = true
-        $0.alpha = 0.2
         return $0
     }(UIImageView())
     
@@ -37,7 +29,6 @@ class FullScreenPhotosViewController: UIViewController {
         $0.image = UIImage(systemName: "multiply")
         $0.contentMode = .scaleAspectFit
         $0.tintColor = .systemGray6
-        $0.alpha = 0.0
         return $0
     }(UIImageView())
     
@@ -47,17 +38,7 @@ class FullScreenPhotosViewController: UIViewController {
     }
 
     @objc private func tapActionExit() {
-        UIView.animate(withDuration: 0.2) {
-            self.image.alpha = 0.0
-            self.profileExitFullScreen.alpha = 0.0
-        } completion: { _ in
-            UIView.animate(withDuration: 0.2) {
-                self.backView.alpha = 0.0
-                self.blurEffectView.alpha = 0.0
-            } completion: { _ in
-                self.dismiss(animated: false)
-            }
-        }
+        self.dismiss(animated: true)
     }
 
     override func viewDidLoad() {
@@ -67,24 +48,15 @@ class FullScreenPhotosViewController: UIViewController {
         tapGesturesExit()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.3) {
-            self.backView.alpha = 0.7
-            self.blurEffectView.alpha = 0.5
-            self.image.alpha = 1.0
-        } completion: { _ in
-            UIView.animate(withDuration: 0.2) {
-                self.profileExitFullScreen.alpha = 1.0
-            }
-        }
-    }
-    
     private func layout() {
-        
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemMaterialDark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
+        blurEffectView.alpha = 0.5
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        [blurEffectView, backView, image, profileExitFullScreen].forEach { view.addSubview($0)}
+        
+        [backView, blurEffectView, image, profileExitFullScreen].forEach { view.addSubview($0)}
         
         NSLayoutConstraint.activate([
             backView.topAnchor.constraint(equalTo: view.topAnchor),

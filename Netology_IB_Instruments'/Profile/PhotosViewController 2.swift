@@ -83,6 +83,8 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         let vc = FullScreenPhotosViewController()
         vc.image.image = photosModel[indexPath.row].image
         vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: false)
+        UIView.animate(withDuration: 1.0) {
+            self.present(vc, animated: false)
+        }
     }
 }
