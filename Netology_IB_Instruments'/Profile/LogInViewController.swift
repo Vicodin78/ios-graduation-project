@@ -76,8 +76,9 @@ class LogInViewController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitle("Log In", for: .normal)
         $0.setTitleColor(.white, for: .normal)
-        let imgNormal = UIImage(named: "blue_pixel")!.alpha(1.0)
-        let imgOther = UIImage(named: "blue_pixel")!.alpha(0.8)
+        let imgNormal = UIImage(named: "blue_pixel")?.alpha(1.0)
+        let imgOther = UIImage(named: "blue_pixel")?.alpha(0.8)
+        $0.backgroundColor = .blue
         $0.setBackgroundImage(imgNormal, for: .normal)
         $0.setBackgroundImage(imgOther, for: .selected)
         $0.setBackgroundImage(imgOther, for: .highlighted)
