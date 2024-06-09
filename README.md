@@ -32,12 +32,12 @@ ImitateVK - это приложение-имитация социальной с
 
 1. Клонируйте репозиторий:
     ```bash
-    git clone https://github.com/yourusername/imitate-vk.git
+    git clone https://github.com/Vicodin78/ios-graduation-project
     ```
 2. Откройте проект в Xcode:
     ```bash
-    cd imitate-vk
-    open ImitateVK.xcodeproj
+    cd ios-graduation-project
+    open ios-graduation-project.xcodeproj
     ```
 3. Запустите приложение на симуляторе или реальном устройстве.
    
